@@ -28,6 +28,8 @@ func GetSource(s string) Source {
 		return IPApiCom
 	case "IPINFO":
 		return IPInfo
+	case "IPWHOIS":
+		return IPWHOIS
 	default:
 		return LeoIP
 	}
