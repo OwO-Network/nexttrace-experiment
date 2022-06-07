@@ -133,6 +133,10 @@ func main() {
 		*port = 53
 	}
 
+	if !*noRdns {
+		*noRdns = configData.NoRDNS
+	}
+
 	var conf = trace.Config{
 		DestIP:           ip,
 		DestPort:         *port,
@@ -156,8 +160,6 @@ func main() {
 
 	if (*tcpSYNFlag && *udpPackageFlag) || *tablePrint || configData.TablePrintDefault {
 		printer.TracerouteTablePrinter(res)
-	} else if *tcpSYNFlag || *udpPackageFlag {
-		printer.TraceroutePrinter(res)
 	}
 
 	if *routePath || configData.AlwaysRoutePath {
