@@ -5,6 +5,11 @@ import "os"
 type tracerConfig struct {
 	Token      `yaml:"Token"`
 	Preference `yaml:"Preference"`
+	WebAPI     `yaml:"WebAPI"`
+}
+
+type WebAPI struct {
+	APIToken string `yaml:"APIToken"`
 }
 
 type Token struct {

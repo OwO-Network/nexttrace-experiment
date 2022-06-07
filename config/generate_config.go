@@ -93,7 +93,7 @@ func Generate() error {
 		prompt := promptui.Select{
 			Label: "请选择功能",
 			// Items: []string{"Token设置", "路由跟踪偏好设置", "快速路由测试设置", "保存并退出"},
-			Items: []string{"Token设置", "路由跟踪偏好设置", "保存并退出"},
+			Items: []string{"Token设置", "路由跟踪偏好设置", "Web API 设置", "不保存推出", "保存并退出"},
 		}
 
 		_, result, err := prompt.Run()
@@ -103,10 +103,14 @@ func Generate() error {
 		}
 
 		switch result {
-		case "Token设置":
+		case "Token 设置":
 			tc.tokenSettings()
 		case "路由跟踪偏好设置":
 			tc.preferenceSettings()
+		case "Web API 设置":
+			tc.webSettings()
+		case "不保存并退出":
+			return nil
 		case "保存并退出":
 			if err := tc.saveConfig(); err != nil {
 				return err
@@ -114,64 +118,4 @@ func Generate() error {
 			return nil
 		}
 	}
-
-	// var preference Preference
-
-	// fmt.Print("我希望默认在路由跟踪完毕后，不绘制Route-Path图 (y/n) [y]")
-	// fmt.Scanln(&tmpInput)
-	// if tmpInput == "n" || tmpInput == "N" || tmpInput == "no" || tmpInput == "No" || tmpInput == "NO" {
-	// 	AlwaysRoutePath = true
-	// } else {
-	// 	AlwaysRoutePath = false
-	// }
-
-	// fmt.Print("我希望路由跟踪默认实时显示，而不使用制表模式 (y/n) [y]")
-	// fmt.Scanln(&tmpInput)
-	// if tmpInput == "n" || tmpInput == "N" || tmpInput == "no" || tmpInput == "No" || tmpInput == "NO" {
-	// 	tablePrintDefault = true
-	// } else {
-	// 	tablePrintDefault = false
-	// }
-
-	// fmt.Println("请选择默认的IP地理位置API数据源：\n1. LeoMoe\n2. IPInfo\n3. IPInsight\n4. IP.SB\n5. IP-API.COM")
-	// fmt.Print("请输入您的选择：")
-	// fmt.Scanln(&tmpInput)
-	// switch tmpInput {
-	// case "1":
-	// 	dataOrigin = "LEOMOEAPI"
-	// case "2":
-	// 	dataOrigin = "IPINFO"
-	// case "3":
-	// 	dataOrigin = "IPINSIGHT"
-	// case "4":
-	// 	dataOrigin = "IP.SB"
-	// case "5":
-	// 	dataOrigin = "IPAPI.COM"
-	// default:
-	// 	dataOrigin = "LEOMOEAPI"
-	// }
-
-	// preference = Preference{
-	// 	AlwaysRoutePath:   AlwaysRoutePath,
-	// 	TablePrintDefault: tablePrintDefault,
-	// 	DataOrigin:        dataOrigin,
-	// }
-
-	// finalConfig := tracerConfig{
-	// 	// Token:      token,
-	// 	Preference: preference,
-	// }
-
-	// yamlData, err := yaml.Marshal(&finalConfig)
-
-	// if err != nil {
-	// 	return nil, err
-	// }
-
-	// if err = writeFile(yamlData); err != nil {
-	// 	return nil, err
-	// } else {
-	// 	fmt.Println("配置文件已经更新，在下次路由跟踪时，将会使用您的偏好。")
-	// 	return &finalConfig, nil
-	// }
 }

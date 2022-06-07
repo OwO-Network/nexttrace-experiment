@@ -16,9 +16,11 @@ import (
 	"github.com/xgadget-lab/nexttrace/reporter"
 	"github.com/xgadget-lab/nexttrace/trace"
 	"github.com/xgadget-lab/nexttrace/util"
+	"github.com/xgadget-lab/nexttrace/web"
 )
 
 var fSet = flag.NewFlagSet("", flag.ExitOnError)
+var webAPI = fSet.Bool("w", false, "Enable Web API Method")
 var fastTest = fSet.Bool("f", false, "One-Key Fast Traceroute")
 var tcpSYNFlag = fSet.Bool("T", false, "Use TCP SYN for tracerouting (default port is 80)")
 var udpPackageFlag = fSet.Bool("U", false, "Use UDP Package for tracerouting (default port is 53 in UDP)")
@@ -68,6 +70,10 @@ func flagApply() string {
 			log.Fatal(err)
 		}
 		os.Exit(0)
+	}
+
+	if *webAPI {
+		web.Start()
 	}
 
 	// -f Fast Test
@@ -160,6 +166,8 @@ func main() {
 
 	if (*tcpSYNFlag && *udpPackageFlag) || *tablePrint || configData.TablePrintDefault {
 		printer.TracerouteTablePrinter(res)
+	} else if *tcpSYNFlag || *udpPackageFlag {
+		printer.TraceroutePrinter(res)
 	}
 
 	if *routePath || configData.AlwaysRoutePath {
