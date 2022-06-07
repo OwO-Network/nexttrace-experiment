@@ -93,7 +93,7 @@ func Generate() error {
 		prompt := promptui.Select{
 			Label: "请选择功能",
 			// Items: []string{"Token设置", "路由跟踪偏好设置", "快速路由测试设置", "保存并退出"},
-			Items: []string{"Token设置", "路由跟踪偏好设置", "Web API 设置", "不保存推出", "保存并退出"},
+			Items: []string{"路由跟踪偏好设置", "Token 设置", "Web API 设置", "不保存并退出", "保存并退出"},
 		}
 
 		_, result, err := prompt.Run()

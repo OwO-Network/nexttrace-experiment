@@ -9,7 +9,8 @@ type tracerConfig struct {
 }
 
 type WebAPI struct {
-	APIToken string `yaml:"APIToken"`
+	APIToken   string `yaml:"APIToken"`
+	ListenPort int    `yaml:"ListenPort"`
 }
 
 type Token struct {

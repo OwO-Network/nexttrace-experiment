@@ -4,6 +4,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -67,5 +68,12 @@ func Start() {
 
 		c.JSON(http.StatusOK, res)
 	})
-	router.Run(":8080")
+
+	var port string
+	if configData.ListenPort == 0 {
+		port = "8080"
+	} else {
+		port = strconv.Itoa(configData.ListenPort)
+	}
+	router.Run(":" + port)
 }
