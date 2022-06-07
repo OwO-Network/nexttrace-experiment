@@ -16,13 +16,13 @@
 
 ```bash
 # Linux 一键安装脚本
-bash <(curl -Ls https://raw.githubusercontent.com/xgadget-lab/nexttrace/main/nt_install.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/OwO-Network/nexttrace/main/nt_install.sh)
 
 # GHPROXY 镜像（国内使用）
-bash <(curl -Ls https://ghproxy.com/https://raw.githubusercontent.com/xgadget-lab/nexttrace/main/nt_install.sh)
+bash <(curl -Ls https://ghproxy.com/https://raw.githubusercontent.com/OwO-Network/nexttrace/main/nt_install.sh)
 
 # macOS brew 安装命令
-brew tap xgadget-lab/nexttrace && brew install nexttrace
+brew tap OwO-Network/nexttrace && brew install nexttrace
 ```
 
 - `Release`里面为很多系统以及不同架构提供了编译好的二进制可执行文件，如果没有可以自行编译。
@@ -116,7 +116,7 @@ nexttrace -T -q 2 -r 1 -rdns -table -report 2001:4860:4860::8888
 
 我们也会在后期开放服务端源代码，您也可以根据该项目的源码自行搭建属于您的 API 服务器。
 
-NextTrace 所有的的 IP 地理位置`API DEMO`可以参考[这里](https://github.com/xgadget-lab/nexttrace/blob/main/ipgeo/)
+NextTrace 所有的的 IP 地理位置`API DEMO`可以参考[这里](https://github.com/OwO-Network/nexttrace/blob/main/ipgeo/)
 
 ### 全部用法详见 Usage 菜单
 
@@ -153,15 +153,6 @@ Options:
 <img src=asset/screenshot.png alt="NextTrace Screenshot" height="688" />
 
 </div>
-
-## FAQ 常见问题
-
-如果你在安装或者使用的时候遇到了问题，我们建议你不要把新建一个 `issue` 作为首选项
-
-以下是我们推荐的排错流程：
-
-1. 查看是否为常见问题 -> [前往 Github Wiki](https://github.com/xgadget-lab/nexttrace/wiki/FAQ---%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94)
-2. 疑似 BUG、或者功能建议 -> [前往 Github Issues](https://github.com/xgadget-lab/nexttrace/issues)
 
 ## Thanks
 
