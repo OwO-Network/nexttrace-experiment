@@ -10,6 +10,7 @@ type tracerConfig struct {
 type Token struct {
 	LeoMoeAPI string `yaml:"LeoMoeAPI"`
 	IPInfo    string `yaml:"IPInfo"`
+	IPInsight string `yaml:"IPInsight"`
 }
 
 type Preference struct {

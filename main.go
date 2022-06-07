@@ -32,6 +32,7 @@ var noRdns = fSet.Bool("n", false, "Disable IP Reverse DNS lookup")
 var routePath = fSet.Bool("report", false, "Route Path")
 var tablePrint = fSet.Bool("table", false, "Output trace results as table")
 var ver = fSet.Bool("V", false, "Check Version")
+var timeOut = fSet.Int("t", 1000, "Set timeout [Millisecond]")
 
 func printArgHelp() {
 	fmt.Println("\nArgs Error\nUsage : 'nexttrace [option...] HOSTNAME' or 'nexttrace HOSTNAME [option...]'\nOPTIONS: [-VTU] [-d DATAORIGIN.STR ] [ -m TTL ] [ -p PORT ] [ -q PROBES.COUNT ] [ -r PARALLELREQUESTS.COUNT ] [-rdns] [ -table ] -report")
@@ -63,7 +64,7 @@ func flagApply() string {
 
 	// Advanced Config
 	if *manualConfig {
-		if _, err := config.Generate(); err != nil {
+		if err := config.Generate(); err != nil {
 			log.Fatal(err)
 		}
 		os.Exit(0)
@@ -140,10 +141,10 @@ func main() {
 		ParallelRequests: *parallelRequests,
 		RDns:             !*noRdns,
 		IPGeoSource:      ipgeo.GetSource(*dataOrigin),
-		Timeout:          2 * time.Second,
+		Timeout:          time.Duration(*timeOut) * time.Millisecond,
 	}
 
-	if m == trace.ICMPTrace && !*tablePrint {
+	if !*tablePrint && !configData.TablePrintDefault {
 		conf.RealtimePrinter = printer.RealtimePrinter
 	}
 

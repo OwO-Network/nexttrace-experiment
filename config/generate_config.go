@@ -3,8 +3,10 @@ package config
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 
+	"github.com/manifoldco/promptui"
 	"gopkg.in/yaml.v2"
 )
 
@@ -46,14 +48,14 @@ func writeFile(content []byte) error {
 
 func AutoGenerate() (*tracerConfig, error) {
 	token := Token{
-		LeoMoeAPI: "NextTraceDemo",
+		LeoMoeAPI: "LeoOwO",
 		IPInfo:    "",
 	}
 
 	preference := Preference{
 		AlwaysRoutePath:   false,
 		TablePrintDefault: false,
-		DataOrigin:        "LEOMOEAPI",
+		DataOrigin:        "LeoMoeAPI",
 	}
 
 	finalConfig := tracerConfig{
@@ -74,87 +76,102 @@ func AutoGenerate() (*tracerConfig, error) {
 	}
 }
 
-func Generate() (*tracerConfig, error) {
-	var leotoken string
-	var iPInfoToken string
-	var tmpInput string
+func Generate() error {
 
-	fmt.Println("欢迎使用高阶自定义功能，这是一个配置向导，我们会帮助您生成配置文件。您的配置文件会被放在 ~/.nexttrace/ntraceConfig.yml 中，您也可以通过编辑这个文件来自定义配置。")
+	fmt.Println("欢迎使用高阶自定义功能，这是一个配置向导，我们会帮助您生成配置文件。\n您的配置文件会被放在 ~/.nexttrace/ntraceConfig.yml 中，您也可以通过编辑这个文件来自定义配置。")
 
-	fmt.Println("请输入您的LeoMoeAPI Token，您可以回车，以便继续使用公共Token")
-	fmt.Scanln(&leotoken)
-	if leotoken == "" {
-		fmt.Println("检测到您的输入为空，您将使用公共Token。")
-		leotoken = "NextTraceDemo"
+	tc, err := Read()
+
+	// Initialize Default Config
+	if err != nil || tc.DataOrigin == "" {
+		if tc, err = AutoGenerate(); err != nil {
+			log.Fatal(err)
+		}
 	}
 
-	fmt.Println("请输入您的IPInfo Token，如果您不需要使用IPInfo，可以直接回车")
-	fmt.Scanln(&iPInfoToken)
+	for {
+		prompt := promptui.Select{
+			Label: "请选择功能",
+			// Items: []string{"Token设置", "路由跟踪偏好设置", "快速路由测试设置", "保存并退出"},
+			Items: []string{"Token设置", "路由跟踪偏好设置", "保存并退出"},
+		}
 
-	token := Token{
-		LeoMoeAPI: leotoken,
-		IPInfo:    iPInfoToken,
+		_, result, err := prompt.Run()
+
+		if err != nil {
+			fmt.Printf("取消设置 %v\n", err)
+		}
+
+		switch result {
+		case "Token设置":
+			tc.tokenSettings()
+		case "路由跟踪偏好设置":
+			tc.preferenceSettings()
+		case "保存并退出":
+			if err := tc.saveConfig(); err != nil {
+				return err
+			}
+			return nil
+		}
 	}
 
-	var preference Preference
-	var AlwaysRoutePath bool
-	var tablePrintDefault bool
-	var dataOrigin string
-	fmt.Print("我希望默认在路由跟踪完毕后，不绘制Route-Path图 (y/n) [y]")
-	fmt.Scanln(&tmpInput)
-	if tmpInput == "n" || tmpInput == "N" || tmpInput == "no" || tmpInput == "No" || tmpInput == "NO" {
-		AlwaysRoutePath = true
-	} else {
-		AlwaysRoutePath = false
-	}
+	// var preference Preference
 
-	fmt.Print("我希望路由跟踪默认实时显示，而不使用制表模式 (y/n) [y]")
-	fmt.Scanln(&tmpInput)
-	if tmpInput == "n" || tmpInput == "N" || tmpInput == "no" || tmpInput == "No" || tmpInput == "NO" {
-		tablePrintDefault = true
-	} else {
-		tablePrintDefault = false
-	}
+	// fmt.Print("我希望默认在路由跟踪完毕后，不绘制Route-Path图 (y/n) [y]")
+	// fmt.Scanln(&tmpInput)
+	// if tmpInput == "n" || tmpInput == "N" || tmpInput == "no" || tmpInput == "No" || tmpInput == "NO" {
+	// 	AlwaysRoutePath = true
+	// } else {
+	// 	AlwaysRoutePath = false
+	// }
 
-	fmt.Println("请选择默认的IP地理位置API数据源：\n1. LeoMoe\n2. IPInfo\n3. IPInsight\n4. IP.SB\n5. IP-API.COM")
-	fmt.Print("请输入您的选择：")
-	fmt.Scanln(&tmpInput)
-	switch tmpInput {
-	case "1":
-		dataOrigin = "LEOMOEAPI"
-	case "2":
-		dataOrigin = "IPINFO"
-	case "3":
-		dataOrigin = "IPINSIGHT"
-	case "4":
-		dataOrigin = "IP.SB"
-	case "5":
-		dataOrigin = "IPAPI.COM"
-	default:
-		dataOrigin = "LEOMOEAPI"
-	}
+	// fmt.Print("我希望路由跟踪默认实时显示，而不使用制表模式 (y/n) [y]")
+	// fmt.Scanln(&tmpInput)
+	// if tmpInput == "n" || tmpInput == "N" || tmpInput == "no" || tmpInput == "No" || tmpInput == "NO" {
+	// 	tablePrintDefault = true
+	// } else {
+	// 	tablePrintDefault = false
+	// }
 
-	preference = Preference{
-		AlwaysRoutePath:   AlwaysRoutePath,
-		TablePrintDefault: tablePrintDefault,
-		DataOrigin:        dataOrigin,
-	}
+	// fmt.Println("请选择默认的IP地理位置API数据源：\n1. LeoMoe\n2. IPInfo\n3. IPInsight\n4. IP.SB\n5. IP-API.COM")
+	// fmt.Print("请输入您的选择：")
+	// fmt.Scanln(&tmpInput)
+	// switch tmpInput {
+	// case "1":
+	// 	dataOrigin = "LEOMOEAPI"
+	// case "2":
+	// 	dataOrigin = "IPINFO"
+	// case "3":
+	// 	dataOrigin = "IPINSIGHT"
+	// case "4":
+	// 	dataOrigin = "IP.SB"
+	// case "5":
+	// 	dataOrigin = "IPAPI.COM"
+	// default:
+	// 	dataOrigin = "LEOMOEAPI"
+	// }
 
-	finalConfig := tracerConfig{
-		Token:      token,
-		Preference: preference,
-	}
+	// preference = Preference{
+	// 	AlwaysRoutePath:   AlwaysRoutePath,
+	// 	TablePrintDefault: tablePrintDefault,
+	// 	DataOrigin:        dataOrigin,
+	// }
 
-	yamlData, err := yaml.Marshal(&finalConfig)
+	// finalConfig := tracerConfig{
+	// 	// Token:      token,
+	// 	Preference: preference,
+	// }
 
-	if err != nil {
-		return nil, err
-	}
+	// yamlData, err := yaml.Marshal(&finalConfig)
 
-	if err = writeFile(yamlData); err != nil {
-		return nil, err
-	} else {
-		fmt.Println("配置文件已经更新，在下次路由跟踪时，将会使用您的偏好。")
-		return &finalConfig, nil
-	}
+	// if err != nil {
+	// 	return nil, err
+	// }
+
+	// if err = writeFile(yamlData); err != nil {
+	// 	return nil, err
+	// } else {
+	// 	fmt.Println("配置文件已经更新，在下次路由跟踪时，将会使用您的偏好。")
+	// 	return &finalConfig, nil
+	// }
 }
