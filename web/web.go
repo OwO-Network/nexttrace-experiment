@@ -4,6 +4,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 
@@ -14,6 +15,18 @@ import (
 )
 
 var confToken string
+
+// exists returns whether the given file or directory exists or not
+func exists(path string) (bool, error) {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true, nil
+	}
+	if os.IsNotExist(err) {
+		return false, nil
+	}
+	return true, err
+}
 
 func CrosHandler() gin.HandlerFunc {
 	return func(context *gin.Context) {
@@ -49,7 +62,13 @@ func Start() {
 
 	router := gin.Default()
 
-	router.LoadHTMLFiles("web/templates/index.tmpl")
+	dir, _ := config.ConfigFromUserHomeDir()
+
+	if s, _ := exists(dir + "index.tmpl"); !s {
+		writeTemplateFile()
+	}
+
+	router.LoadHTMLFiles(dir + "index.tmpl")
 	router.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.tmpl", gin.H{
 			"title": "NextTrace 路由跟踪测试",
