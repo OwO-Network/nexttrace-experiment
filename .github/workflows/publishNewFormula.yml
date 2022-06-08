@@ -17,7 +17,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Clone repo
         run: git clone https://github.com/OwO-Network/homebrew-nexttrace-enhanced.git
-      - run: cd homebrew-nexttrace-enhanced && bash genFormula.sh
+      - run: cd homebrew-nexttrace-enhanced && bash genFormula.sh && pwd
       - name: List files in the repository
         run: |
           pwd
