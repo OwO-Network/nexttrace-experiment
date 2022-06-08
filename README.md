@@ -8,7 +8,7 @@
 
 一款开源的可视化路由跟踪工具，使用 Golang 开发。
 
-这是`NextTrace`加强版，旨在提供高度可定制化的可视化Traceroute工具。
+这是`NextTrace`加强版，旨在提供高度可定制化的可视化 Traceroute 工具。
 
 ## How To Use
 
@@ -51,6 +51,7 @@ nexttrace -w
 ```
 
 `NextTrace` 现已经支持快速测试，有一次性测试回程路由需求的朋友可以使用
+
 ```bash
 # 北上广（电信+联通+移动+教育网）IPv4 ICMP 快速测试
 nexttrace -f
@@ -160,7 +161,9 @@ Usage of nexttrace:
 
 <div align="center">
 
-<img src=asset/screenshot.png alt="NextTrace Screenshot" height="688" />
+<img src=asset/screenshot.png alt="NextTrace Screenshot" />
+
+<img src=asset/screenshot-web.png alt="NextTrace Web Screenshot" />
 
 </div>
 
