@@ -33,7 +33,7 @@ func (f *FastTracer) tracert(location string, ispCollection ISPCollection) {
 		Timeout:          1 * time.Second,
 	}
 
-	if f.TracerouteMethod == trace.ICMPTrace {
+	if !f.Preference.TablePrintDefault {
 		conf.RealtimePrinter = printer.RealtimePrinter
 	}
 
@@ -43,7 +43,7 @@ func (f *FastTracer) tracert(location string, ispCollection ISPCollection) {
 		log.Fatal(err)
 	}
 
-	if f.TracerouteMethod == trace.TCPTrace {
+	if f.Preference.TablePrintDefault {
 		printer.TracerouteTablePrinter(res)
 	}
 

@@ -108,7 +108,7 @@ var Guangzhou = BackBoneCollection{
 
 	CU169: ISPCollection{
 		ISPName: CU169,
-		IP:      "123.125.96.156",
+		IP:      "157.18.0.22",
 	},
 
 	CM: ISPCollection{
@@ -157,6 +157,6 @@ var Changsha = BackBoneCollection{
 	// 中南大学 教育网
 	EDU: ISPCollection{
 		ISPName: EDU,
-		IP:      "202.197.61.221",		
+		IP:      "202.197.61.221",
 	},
 }
