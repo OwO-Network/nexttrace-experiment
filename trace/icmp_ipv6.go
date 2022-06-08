@@ -126,7 +126,8 @@ func (t *ICMPTracerv6) send(ttl int) error {
 
 	start := time.Now()
 	if _, err := t.icmpListen.WriteTo(wb, &net.IPAddr{IP: t.DestIP}); err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return err
 	}
 	if err := t.icmpListen.SetReadDeadline(time.Now().Add(3 * time.Second)); err != nil {
 		log.Fatal(err)
