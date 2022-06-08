@@ -29,11 +29,11 @@ type Preference struct {
 
 type configPath func() (string, error)
 
-func configFromRunDir() (string, error) {
+func ConfigFromRunDir() (string, error) {
 	return "./", nil
 }
 
-func configFromUserHomeDir() (string, error) {
+func ConfigFromUserHomeDir() (string, error) {
 	dir, err := os.UserHomeDir()
 	if err != nil {
 		return "", err

@@ -45,7 +45,7 @@ func (tc *tracerConfig) preferenceSettings() {
 		case "IP 地理位置数据源":
 			prompt := promptui.Select{
 				Label: "请选择您默认想要使用的 IP 地理位置数据源",
-				Items: []string{"LeoMoeAPI", "IPInfo", "IPInsight", "IP.SB", "IPAPI.COM", "IPWHOIS"},
+				Items: []string{"LeoMoeAPI", "IPInfo", "IPInsight", "IP.SB", "IPAPI.COM"},
 			}
 
 			_, result, err := prompt.Run()

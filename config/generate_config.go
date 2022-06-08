@@ -24,9 +24,9 @@ func pathExists(path string) (bool, error) {
 func writeFile(content []byte) error {
 	var err error
 	var path string
-	path, err = configFromUserHomeDir()
+	path, err = ConfigFromUserHomeDir()
 	if err != nil {
-		path, err = configFromRunDir()
+		path, err = ConfigFromRunDir()
 		if err != nil {
 			return err
 		}

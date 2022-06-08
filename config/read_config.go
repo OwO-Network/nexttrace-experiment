@@ -1,9 +1,10 @@
 package config
 
 import (
-    "io/ioutil"
-    "log"
-    "gopkg.in/yaml.v2"
+	"io/ioutil"
+	"log"
+
+	"gopkg.in/yaml.v2"
 )
 
 func (c *tracerConfig) Parse(data []byte) error {
@@ -28,10 +29,10 @@ func Read() (*tracerConfig, error) {
     var data []byte
     var err  error
     
-    data, err = readFile(configFromRunDir)
+    data, err = readFile(ConfigFromRunDir)
 
     if err != nil {
-        data, err = readFile(configFromUserHomeDir)
+        data, err = readFile(ConfigFromUserHomeDir)
 
         if err != nil {
             return nil, err
