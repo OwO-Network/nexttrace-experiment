@@ -36,11 +36,18 @@ brew tap OwO-Network/nexttrace && brew install nexttrace
 # IPv4 ICMP Trace
 nexttrace 1.0.0.1
 
-# 表格打印（一次性输出全部跳数，需等待20-40秒）
+# 报告打印（生成报告表单，并非实时，一次性输出）
 nexttrace -table 1.0.0.1
 
 # IPv6 ICMP Trace
 nexttrace 2606:4700:4700::1111
+```
+
+`NextTrace` 现已支持 `Web API`，可以通过网络端进行路由跟踪测试
+
+```bash
+# 建议使用前先使用 nexttrace -c 进行API端的 Token 配置
+nexttrace -w
 ```
 
 `NextTrace` 现已经支持快速测试，有一次性测试回程路由需求的朋友可以使用
@@ -123,26 +130,29 @@ NextTrace 所有的的 IP 地理位置`API DEMO`可以参考[这里](https://git
 ```shell
 Usage of nexttrace:
       'nexttrace [options] <hostname>' or 'nexttrace <hostname> [option...]'
-Options:
   -T    Use TCP SYN for tracerouting (default port is 80)
   -U    Use UDP Package for tracerouting (default port is 53 in UDP)
   -V    Check Version
+  -c    Manual Config [Advanced]
   -d string
-        Choose IP Geograph Data Provider [LeoMoeAPI, IP.SB, IPInfo, IPInsight, IPAPI.com] (default "LeoMoeAPI")
+        Choose IP Geograph Data Provider [LeoMoeAPI, IP.SB, IPInfo, IPInsight, IPAPI.com, IPWhois]
+  -f    One-Key Fast Traceroute
   -m int
         Set the max number of hops (max TTL to be reached). (default 30)
+  -n    Disable IP Reverse DNS lookup
   -p int
         Set SYN Traceroute Port (default 80)
   -q int
         Set the number of probes per each hop. (default 3)
   -r int
         Set ParallelRequests number. It should be 1 when there is a multi-routing. (default 18)
-  -rdns
-        Set whether rDNS will be display
-  -table
-        Output trace results as table
   -report
         Route Path
+  -t int
+        Set timeout [Millisecond] (default 1000)
+  -table
+        Output trace results as table
+  -w    Enable Web API Method
 
 ```
 
