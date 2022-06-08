@@ -129,30 +129,30 @@ NextTrace 所有的的 IP 地理位置`API DEMO`可以参考[这里](https://git
 
 ```shell
 Usage of nexttrace:
-      'nexttrace [options] <hostname>' or 'nexttrace <hostname> [option...]'
-  -T    Use TCP SYN for tracerouting (default port is 80)
-  -U    Use UDP Package for tracerouting (default port is 53 in UDP)
-  -V    Check Version
-  -c    Manual Config [Advanced]
+      'nexttrace [option...] <hostname>' or 'nexttrace <hostname> [option...]'
+  -T	Use TCP SYN for tracerouting (default port is 80)
+  -U	Use UDP Package for tracerouting (default port is 53 in UDP)
+  -V	Check Version
+  -c	Manual Config [Advanced]
   -d string
-        Choose IP Geograph Data Provider [LeoMoeAPI, IP.SB, IPInfo, IPInsight, IPAPI.com, IPWhois]
-  -f    One-Key Fast Traceroute
+    	Choose IP Geograph Data Provider [LeoMoeAPI, IP.SB, IPInfo, IPInsight, IPAPI.com]
+  -f	One-Key Fast Traceroute
   -m int
-        Set the max number of hops (max TTL to be reached). (default 30)
-  -n    Disable IP Reverse DNS lookup
+    	Set the max number of hops (max TTL to be reached). (default 30)
+  -n	Disable IP Reverse DNS lookup
   -p int
-        Set SYN Traceroute Port (default 80)
+    	Set SYN Traceroute Port (default 80)
   -q int
-        Set the number of probes per each hop. (default 3)
+    	Set the number of probes per each hop. (default 3)
   -r int
-        Set ParallelRequests number. It should be 1 when there is a multi-routing. (default 18)
+    	Set ParallelRequests number. It should be 1 when there is a multi-routing. (default 18)
   -report
-        Route Path
+    	Route Path
   -t int
-        Set timeout [Millisecond] (default 1000)
+    	Set timeout [Millisecond] (default 1000)
   -table
-        Output trace results as table
-  -w    Enable Web API Method
+    	Output trace results as table
+  -w	Enable Web API Method
 
 ```
 
