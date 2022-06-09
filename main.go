@@ -164,10 +164,8 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	if (*tcpSYNFlag && *udpPackageFlag) || *tablePrint || configData.TablePrintDefault {
+	if *tablePrint || configData.TablePrintDefault {
 		printer.TracerouteTablePrinter(res)
-	} else if *tcpSYNFlag || *udpPackageFlag {
-		printer.TraceroutePrinter(res)
 	}
 
 	if *routePath || configData.AlwaysRoutePath {
