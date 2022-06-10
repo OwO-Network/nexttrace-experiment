@@ -176,12 +176,29 @@ func main() {
 			Prov:    *prov,
 			City:    *city,
 		}
+		var ipSplice []net.Addr
 		for _, allHops := range res.Hops {
 			for _, ttlHops := range allHops {
 				if ttlHops.Address != nil {
-					ipgeo.UpdateIPGeo(ttlHops.Address.String(), f)
+					// IP 去重
+					flag := true
+					for _, v := range ipSplice {
+						if v.String() == ttlHops.Address.String() {
+							flag = false
+							break
+						}
+					}
+					if flag {
+						if (ttlHops.Geo.Country != f.Country && f.Country != "") || (ttlHops.Geo.Prov != f.Prov && f.Prov != "") || (ttlHops.Geo.City != f.City && f.City != "") {
+							ipSplice = append(ipSplice, ttlHops.Address)
+						}
+						flag = false
+					}
 				}
 			}
+		}
+		for _, v := range ipSplice {
+			ipgeo.UpdateIPGeo(v.String(), f)
 		}
 	}
 
