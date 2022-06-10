@@ -35,6 +35,10 @@ var routePath = fSet.Bool("report", false, "Route Path")
 var tablePrint = fSet.Bool("table", false, "Output trace results as table")
 var ver = fSet.Bool("V", false, "Check Version")
 var timeOut = fSet.Int("t", 1000, "Set timeout [Millisecond]")
+var fixIPGeoMode = fSet.Bool("fix", false, "Fix IP Geo Mode")
+var country = fSet.String("fix-country", "", "Set Country")
+var prov = fSet.String("fix-prov", "", "Set Province/Region")
+var city = fSet.String("fix-city", "", "Set City/Area")
 
 func printArgHelp() {
 	fmt.Println("\nArgs Error\nUsage : 'nexttrace [option...] HOSTNAME' or 'nexttrace HOSTNAME [option...]'\nOPTIONS: [-VTU] [-d DATAORIGIN.STR ] [ -m TTL ] [ -p PORT ] [ -q PROBES.COUNT ] [ -r PARALLELREQUESTS.COUNT ] [-rdns] [ -table ] -report")
@@ -162,6 +166,17 @@ func main() {
 
 	if err != nil {
 		log.Fatalln(err)
+	}
+
+	if *fixIPGeoMode {
+		f := ipgeo.FixData{
+			Country: *country,
+			Prov:    *prov,
+			City:    *city,
+		}
+		for _, r := range res.Hops[0] {
+			ipgeo.UpdateIPGeo(r.Address.String(), f)
+		}
 	}
 
 	if *tablePrint || configData.TablePrintDefault {

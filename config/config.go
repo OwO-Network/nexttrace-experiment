@@ -14,9 +14,10 @@ type WebAPI struct {
 }
 
 type Token struct {
-	LeoMoeAPI string `yaml:"LeoMoeAPI"`
-	IPInfo    string `yaml:"IPInfo"`
-	IPInsight string `yaml:"IPInsight"`
+	LeoMoeAPI       string `yaml:"LeoMoeAPI"`
+	IPInfo          string `yaml:"IPInfo"`
+	IPInsight       string `yaml:"IPInsight"`
+	LeoMoeUpdateKey string `yaml:"LeoMoeUpdateKey"`
 }
 
 type Preference struct {

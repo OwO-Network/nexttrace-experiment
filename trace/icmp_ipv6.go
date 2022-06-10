@@ -44,7 +44,7 @@ func (t *ICMPTracerv6) Execute() (*Result, error) {
 
 	go t.listenICMP()
 
-	for ttl := 1; ttl <= t.MaxHops; ttl++ {
+	for ttl := t.BeginHop; ttl <= t.MaxHops; ttl++ {
 		if t.final != -1 && ttl > t.final {
 			break
 		}
@@ -126,8 +126,7 @@ func (t *ICMPTracerv6) send(ttl int) error {
 
 	start := time.Now()
 	if _, err := t.icmpListen.WriteTo(wb, &net.IPAddr{IP: t.DestIP}); err != nil {
-		log.Println(err)
-		return err
+		log.Fatal(err)
 	}
 	if err := t.icmpListen.SetReadDeadline(time.Now().Add(3 * time.Second)); err != nil {
 		log.Fatal(err)
