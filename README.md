@@ -21,7 +21,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/OwO-Network/nexttrace-enhanced
 # GHPROXY 镜像（国内使用）
 bash <(curl -Ls https://ghproxy.com/https://raw.githubusercontent.com/OwO-Network/nexttrace-enhanced/main/nt_install.sh)
 
-# macOS brew 安装命令
+# 对于macOS或一些支持brew进行包管理的可以使用此命令安装
 brew tap OwO-Network/nexttrace && brew install nexttrace
 ```
 
