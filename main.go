@@ -39,6 +39,7 @@ var fixIPGeoMode = fSet.Bool("fix", false, "Fix IP Geo Mode")
 var country = fSet.String("fix-country", "", "Set Country")
 var prov = fSet.String("fix-prov", "", "Set Province/Region")
 var city = fSet.String("fix-city", "", "Set City/Area")
+var beginHop = fSet.Int("b", 1, "Set the begin hop")
 
 func printArgHelp() {
 	fmt.Println("\nArgs Error\nUsage : 'nexttrace [option...] HOSTNAME' or 'nexttrace HOSTNAME [option...]'\nOPTIONS: [-VTU] [-d DATAORIGIN.STR ] [ -m TTL ] [ -p PORT ] [ -q PROBES.COUNT ] [ -r PARALLELREQUESTS.COUNT ] [-rdns] [ -table ] -report")
@@ -148,6 +149,7 @@ func main() {
 	}
 
 	var conf = trace.Config{
+		BeginHop:         *beginHop,
 		DestIP:           ip,
 		DestPort:         *port,
 		MaxHops:          *maxHops,
