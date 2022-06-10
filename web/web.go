@@ -82,6 +82,8 @@ func Start() {
 		token := c.Query("token")
 		ip := net.ParseIP(c.Query("ip"))
 		m := c.DefaultQuery("method", "icmp")
+		b := c.DefaultQuery("beginHop", "1")
+		e := c.DefaultQuery("maxHop", "30")
 		dataOrigin := c.DefaultQuery("data", "LeoMoeAPI")
 
 		if token != confToken {
@@ -95,10 +97,23 @@ func Start() {
 			timeout = 1100
 		}
 
+		beginHop, err := strconv.Atoi(b)
+
+		if err != nil {
+			c.JSON(http.StatusForbidden, gin.H{"status": "fail", "message": "BeginHop输入不合法"})
+		}
+
+		endHop, err := strconv.Atoi(e)
+
+		if err != nil {
+			c.JSON(http.StatusForbidden, gin.H{"status": "fail", "message": "EndHop输入不合法"})
+		}
+
 		var conf = trace.Config{
+			BeginHop:         beginHop,
 			DestIP:           ip,
 			DestPort:         80,
-			MaxHops:          30,
+			MaxHops:          endHop,
 			NumMeasurements:  1,
 			ParallelRequests: 18,
 			RDns:             true,
