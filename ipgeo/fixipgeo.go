@@ -30,8 +30,7 @@ func UpdateIPGeo(ip string, fixData FixData) {
 		Timeout: 2 * time.Second,
 	}
 	req, _ := http.NewRequest("GET", url, nil)
-	// 设置 UA，ip.sb 默认禁止 go-client User-Agent 的 api 请求
-	req.Header.Set("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0")
+	req.Header.Set("User-Agent", "NextTrace Enhanced 0.1.17")
 	_, err = client.Do(req)
 	if err != nil {
 		log.Println("Update 超时")
