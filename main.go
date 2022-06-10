@@ -176,8 +176,12 @@ func main() {
 			Prov:    *prov,
 			City:    *city,
 		}
-		for _, r := range res.Hops[0] {
-			ipgeo.UpdateIPGeo(r.Address.String(), f)
+		for _, allHops := range res.Hops {
+			for _, ttlHops := range allHops {
+				if ttlHops.Address != nil {
+					ipgeo.UpdateIPGeo(ttlHops.Address.String(), f)
+				}
+			}
 		}
 	}
 

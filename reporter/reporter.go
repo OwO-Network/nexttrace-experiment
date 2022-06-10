@@ -114,12 +114,15 @@ func (r *reporter) InitialBaseData() Reporter {
 	r.targetTTL = uint16(len(r.routeResult.Hops))
 
 	for i, rhps := range r.routeResult.Hops {
-		traceHop := rhps[0]
-		if traceHop.Success {
-			currentIP := traceHop.Address.String()
-			r.wg.Add(1)
-			go r.generateRouteReportNode(currentIP, *traceHop.Geo, uint16(i))
+		if len(rhps) != 0 {
+			traceHop := rhps[0]
+			if traceHop.Success {
+				currentIP := traceHop.Address.String()
+				r.wg.Add(1)
+				go r.generateRouteReportNode(currentIP, *traceHop.Geo, uint16(i))
+			}
 		}
+
 	}
 
 	// 等待所有的子协程运行完毕
