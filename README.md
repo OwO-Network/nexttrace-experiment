@@ -124,7 +124,7 @@ nexttrace -T -q 2 -r 1 -rdns -table -report 2001:4860:4860::8888
 
 我们也会在后期开放服务端源代码，您也可以根据该项目的源码自行搭建属于您的 API 服务器。
 
-NextTrace 所有的的 IP 地理位置`API DEMO`可以参考[这里](https://github.com/OwO-Network/nexttrace/blob/main/ipgeo/)
+NextTrace 所有的的 IP 地理位置`API DEMO`可以参考[这里](https://github.com/OwO-Network/nexttrace-enhanced/blob/main/ipgeo/)
 
 ### 全部用法详见 Usage 菜单
 
