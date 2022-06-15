@@ -19,7 +19,7 @@ type FastTracer struct {
 }
 
 func (f *FastTracer) tracert(location string, ispCollection ISPCollection) {
-	fmt.Printf("『%s %s 』\n", location, ispCollection.ISPName)
+	fmt.Printf("\033[1;33m『%s %s 』\033[0m\n", location, ispCollection.ISPName)
 	fmt.Printf("traceroute to %s, 30 hops max, 32 byte packets\n", ispCollection.IP)
 	ip := net.ParseIP(ispCollection.IP)
 	var conf = trace.Config{
@@ -46,7 +46,10 @@ func (f *FastTracer) tracert(location string, ispCollection ISPCollection) {
 
 	if f.Preference.TablePrintDefault {
 		printer.TracerouteTablePrinter(res)
+		<-time.After(time.Second * 3)
 	}
+
+	println()
 
 	if f.Preference.AlwaysRoutePath {
 		r := reporter.New(res, ip.String())
@@ -74,8 +77,11 @@ func initialize() *FastTracer {
 
 func (f *FastTracer) testAll() {
 	f.testCT()
+	println()
 	f.testCU()
+	println()
 	f.testCM()
+	println()
 	f.testEDU()
 }
 
