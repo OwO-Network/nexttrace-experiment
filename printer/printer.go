@@ -63,7 +63,13 @@ func formatIpGeoData(ip string, data *ipgeo.IPGeoData) string {
 			data.Owner = data.Isp
 		}
 		if data.District != "" {
-			data.City = data.City + ", " + data.District
+			// 判断 City 是否为空
+			if data.City == "" {
+				data.City = data.District
+			} else {
+				// 不为空
+				data.City = data.City + ", " + data.District
+			}
 		}
 		if data.Prov == "" && data.City == "" {
 			// anyCast或是骨干网数据不应该有国家信息
