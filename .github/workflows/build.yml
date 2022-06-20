@@ -78,7 +78,7 @@ jobs:
           cd homebrew-nexttrace-enhanced
           git commit -am 'autoPublishNewFormulaBot'
           git remote set-url origin https://${{ secrets.git_accessToken }}@github.com/OwO-Network/homebrew-nexttrace-enhanced.git
-          git push
+          git push || 1
         # env:
         #   SSH_AUTH_SOCK: /tmp/ssh_agent.sock
       - run: echo "🍏 publish-new-formula job's status is ${{ job.status }}."
