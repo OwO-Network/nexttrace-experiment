@@ -28,7 +28,7 @@ func (c *WsConn) messageReceiveHandler() {
 	for {
 		_, msg, err := c.Conn.ReadMessage()
 		if err != nil {
-			log.Println("read:", err)
+			// log.Println("read:", err)
 			return
 		}
 		c.MsgReceiveCh <- string(msg)
@@ -73,7 +73,7 @@ func createWsConn() *WsConn {
 	signal.Notify(interrupt, os.Interrupt)
 
 	u := url.URL{Scheme: "wss", Host: "api.leo.moe", Path: "/v2/ipGeoWs"}
-	log.Printf("connecting to %s", u.String())
+	// log.Printf("connecting to %s", u.String())
 
 	c, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
 	if err != nil {

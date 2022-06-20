@@ -137,7 +137,6 @@ func main() {
 	if strings.ToUpper(*dataOrigin) == "LEOMOEAPI" {
 		w := wshandle.New()
 		w.Interrupt = make(chan os.Signal, 1)
-		log.Println(os.Interrupt)
 		signal.Notify(w.Interrupt, os.Interrupt)
 		defer func() {
 			w.Conn.Close()
