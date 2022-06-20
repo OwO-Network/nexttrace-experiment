@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"os"
+	"os/signal"
+	"strings"
 	"time"
 
 	"github.com/xgadget-lab/nexttrace/config"
@@ -11,6 +14,7 @@ import (
 	"github.com/xgadget-lab/nexttrace/printer"
 	"github.com/xgadget-lab/nexttrace/reporter"
 	"github.com/xgadget-lab/nexttrace/trace"
+	"github.com/xgadget-lab/nexttrace/wshandle"
 )
 
 type FastTracer struct {
@@ -65,6 +69,16 @@ func initialize() *FastTracer {
 		if configData, err = config.AutoGenerate(); err != nil {
 			log.Fatal(err)
 		}
+	}
+
+	if strings.ToUpper(configData.DataOrigin) == "LEOMOEAPI" {
+		// 建立 WebSocket 连接
+		w := wshandle.New()
+		w.Interrupt = make(chan os.Signal, 1)
+		signal.Notify(w.Interrupt, os.Interrupt)
+		defer func() {
+			w.Conn.Close()
+		}()
 	}
 
 	// Set Token from Config
