@@ -6,6 +6,7 @@ import (
 	"log"
 	"net"
 	"os"
+	"os/signal"
 	"strings"
 	"time"
 
@@ -17,6 +18,7 @@ import (
 	"github.com/xgadget-lab/nexttrace/trace"
 	"github.com/xgadget-lab/nexttrace/util"
 	"github.com/xgadget-lab/nexttrace/web"
+	"github.com/xgadget-lab/nexttrace/wshandle"
 )
 
 var fSet = flag.NewFlagSet("", flag.ExitOnError)
@@ -127,6 +129,21 @@ func main() {
 		ip = util.DomainLookUp(domain, false)
 	}
 
+	if ip.To4() == nil && strings.ToUpper(*dataOrigin) == "LEOMOEAPI" {
+		// IPv6 不使用 LeoMoeAPI
+		*dataOrigin = "ipinsight"
+	}
+
+	if strings.ToUpper(*dataOrigin) == "LEOMOEAPI" {
+		w := wshandle.New()
+		w.Interrupt = make(chan os.Signal, 1)
+		log.Println(os.Interrupt)
+		signal.Notify(w.Interrupt, os.Interrupt)
+		defer func() {
+			w.Conn.Close()
+		}()
+	}
+
 	printer.PrintTraceRouteNav(ip, domain, *dataOrigin)
 
 	var m trace.Method = ""
@@ -210,4 +227,5 @@ func main() {
 		r := reporter.New(res, ip.String())
 		r.Print()
 	}
+
 }
