@@ -71,16 +71,6 @@ func initialize() *FastTracer {
 		}
 	}
 
-	if strings.ToUpper(configData.DataOrigin) == "LEOMOEAPI" {
-		// 建立 WebSocket 连接
-		w := wshandle.New()
-		w.Interrupt = make(chan os.Signal, 1)
-		signal.Notify(w.Interrupt, os.Interrupt)
-		defer func() {
-			w.Conn.Close()
-		}()
-	}
-
 	// Set Token from Config
 	ipgeo.SetToken(configData.Token)
 
@@ -146,6 +136,16 @@ func FastTest(tm bool) {
 		fmt.Println("您将默认使用ICMP协议进行路由跟踪，如果您想使用TCP SYN进行路由跟踪，可以加入 -T 参数")
 	} else {
 		ft.TracerouteMethod = trace.TCPTrace
+	}
+
+	if strings.ToUpper(ft.Preference.DataOrigin) == "LEOMOEAPI" {
+		// 建立 WebSocket 连接
+		w := wshandle.New()
+		w.Interrupt = make(chan os.Signal, 1)
+		signal.Notify(w.Interrupt, os.Interrupt)
+		defer func() {
+			w.Conn.Close()
+		}()
 	}
 
 	switch c {
