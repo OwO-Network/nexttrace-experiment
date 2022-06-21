@@ -228,6 +228,7 @@ func main() {
 
 	if *jsonEnable {
 		printer.PrintJson(res)
+		<-time.After(10 * time.Millisecond)
 		return
 	}
 
