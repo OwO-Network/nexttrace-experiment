@@ -25,7 +25,7 @@ func LocalIPPort(dstip net.IP) (net.IP, int) {
 	return nil, -1
 }
 
-func DomainLookUp(host string, ipv4Only bool) net.IP {
+func DomainLookUp(host string, ipv4Only bool, ipv6Only bool, auto bool) net.IP {
 	ips, err := net.LookupIP(host)
 	if err != nil {
 		fmt.Println("Domain " + host + " Lookup Fail.")
@@ -43,6 +43,10 @@ func DomainLookUp(host string, ipv4Only bool) net.IP {
 			} else {
 				ipv6Flag = true
 			}
+		} else if ipv6Only {
+			if ip.To4() == nil {
+				ipSlice = append(ipSlice, ip)
+			}
 		} else {
 			ipSlice = append(ipSlice, ip)
 		}
@@ -55,7 +59,7 @@ func DomainLookUp(host string, ipv4Only bool) net.IP {
 		}
 	}
 
-	if len(ipSlice) == 1 {
+	if len(ipSlice) == 1 || auto {
 		return ipSlice[0]
 	} else {
 		fmt.Println("Please Choose the IP You Want To TraceRoute")
