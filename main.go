@@ -180,7 +180,7 @@ func main() {
 		Timeout:          time.Duration(*timeOut) * time.Millisecond,
 	}
 
-	if !*tablePrint && !configData.TablePrintDefault {
+	if !*tablePrint && !configData.TablePrintDefault && !*jsonEnable {
 		conf.RealtimePrinter = printer.RealtimePrinter
 	}
 
