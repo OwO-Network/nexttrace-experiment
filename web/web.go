@@ -5,13 +5,16 @@ import (
 	"net"
 	"net/http"
 	"os"
+	"os/signal"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/xgadget-lab/nexttrace/config"
 	"github.com/xgadget-lab/nexttrace/ipgeo"
 	"github.com/xgadget-lab/nexttrace/trace"
+	"github.com/xgadget-lab/nexttrace/wshandle"
 )
 
 var confToken string
@@ -58,6 +61,16 @@ func Start() {
 		confToken = "NextTrace"
 	} else {
 		confToken = configData.APIToken
+	}
+
+	if strings.ToUpper(confToken) == "LEOMOEAPI" {
+		// 建立 WebSocket 连接
+		w := wshandle.New()
+		w.Interrupt = make(chan os.Signal, 1)
+		signal.Notify(w.Interrupt, os.Interrupt)
+		defer func() {
+			w.Conn.Close()
+		}()
 	}
 
 	router := gin.Default()
