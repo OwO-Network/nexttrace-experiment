@@ -63,7 +63,8 @@ func Start() {
 		confToken = configData.APIToken
 	}
 
-	if strings.ToUpper(confToken) == "LEOMOEAPI" {
+	// 如果 DataOrigin 默认配置里是 LeoMoeAPI 新建一个ws连接
+	if strings.ToUpper(configData.DataOrigin) == "LEOMOEAPI" {
 		// 建立 WebSocket 连接
 		w := wshandle.New()
 		w.Interrupt = make(chan os.Signal, 1)
