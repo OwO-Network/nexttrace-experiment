@@ -42,7 +42,7 @@ var country = fSet.String("fix-country", "", "Set Country")
 var prov = fSet.String("fix-prov", "", "Set Province/Region")
 var city = fSet.String("fix-city", "", "Set City/Area")
 var beginHop = fSet.Int("b", 1, "Set the begin hop")
-var jsonEnable = fSet.Bool("j", true, "Output with json format")
+var jsonEnable = fSet.Bool("j", false, "Output with json format")
 var ipv4Only = fSet.Bool("4", false, "Only Displays IPv4 addresses")
 var ipv6Only = fSet.Bool("6", false, "Only Displays IPv6 addresses")
 
