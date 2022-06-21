@@ -43,8 +43,8 @@ var prov = fSet.String("fix-prov", "", "Set Province/Region")
 var city = fSet.String("fix-city", "", "Set City/Area")
 var beginHop = fSet.Int("b", 1, "Set the begin hop")
 var jsonEnable = fSet.Bool("j", true, "Output with json format")
-var ipv4Only = fSet.Bool("4", true, "Only Displays IPv4 addresses")
-var ipv6Only = fSet.Bool("6", true, "Only Displays IPv6 addresses")
+var ipv4Only = fSet.Bool("4", false, "Only Displays IPv4 addresses")
+var ipv6Only = fSet.Bool("6", false, "Only Displays IPv6 addresses")
 
 func printArgHelp() {
 	fmt.Println("\nArgs Error\nUsage : 'nexttrace [option...] HOSTNAME' or 'nexttrace HOSTNAME [option...]'\nOPTIONS: [-VTU] [-d DATAORIGIN.STR ] [ -m TTL ] [ -p PORT ] [ -q PROBES.COUNT ] [ -r PARALLELREQUESTS.COUNT ] [-rdns] [ -table ] -report")

@@ -53,7 +53,10 @@ func DomainLookUp(host string, ipv4Only bool, ipv6Only bool, auto bool) net.IP {
 	}
 
 	if ipv6Flag {
-		fmt.Println("[Info] IPv6 TCP/UDP Traceroute is not supported right now.")
+		if !auto {
+			fmt.Println("[Info] IPv6 TCP/UDP Traceroute is not supported right now.")
+		}
+
 		if len(ipSlice) == 0 {
 			os.Exit(0)
 		}
