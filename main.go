@@ -42,6 +42,7 @@ var country = fSet.String("fix-country", "", "Set Country")
 var prov = fSet.String("fix-prov", "", "Set Province/Region")
 var city = fSet.String("fix-city", "", "Set City/Area")
 var beginHop = fSet.Int("b", 1, "Set the begin hop")
+var jsonEnable = fSet.Bool("j", true, "Output with json format")
 
 func printArgHelp() {
 	fmt.Println("\nArgs Error\nUsage : 'nexttrace [option...] HOSTNAME' or 'nexttrace HOSTNAME [option...]'\nOPTIONS: [-VTU] [-d DATAORIGIN.STR ] [ -m TTL ] [ -p PORT ] [ -q PROBES.COUNT ] [ -r PARALLELREQUESTS.COUNT ] [-rdns] [ -table ] -report")
@@ -50,7 +51,6 @@ func printArgHelp() {
 }
 
 func flagApply() string {
-	printer.Version()
 
 	target := ""
 	if len(os.Args) < 2 {
@@ -64,6 +64,10 @@ func flagApply() string {
 	} else {
 		fSet.Parse(os.Args[1:])
 		target = fSet.Arg(0)
+	}
+
+	if !*jsonEnable {
+		printer.Version()
 	}
 
 	// Print Version
@@ -216,6 +220,11 @@ func main() {
 		for _, v := range ipSplice {
 			ipgeo.UpdateIPGeo(v.String(), f)
 		}
+	}
+
+	if *jsonEnable {
+		printer.PrintJson(res)
+		return
 	}
 
 	if *tablePrint || configData.TablePrintDefault {
