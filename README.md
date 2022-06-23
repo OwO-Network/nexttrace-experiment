@@ -127,11 +127,11 @@ nexttrace -T -q 2 -r 1 -rdns -table -report 2001:4860:4860::8888
 
 ### IP 数据库
 
-目前使用的 IP 数据库默认为我们自己搭建的 API 服务，如果后期遇到滥用，我们可能会选择关闭。
+✨NextTrace `LeoMoeAPI` 的后端也开源啦
 
-我们也会在后期开放服务端源代码，您也可以根据该项目的源码自行搭建属于您的 API 服务器。
+[GitHub - sjlleo/nexttrace-backend: NextTrace BackEnd](https://github.com/sjlleo/nexttrace-backend)
 
-NextTrace 所有的的 IP 地理位置`API DEMO`可以参考[这里](https://github.com/OwO-Network/nexttrace-enhanced/blob/main/ipgeo/)
+NextTrace 所有的的 IP 地理位置`API DEMO`可以参考[这里](https://github.com/xgadget-lab/nexttrace/blob/main/ipgeo/)
 
 ### 全部用法详见 Usage 菜单
 
@@ -180,15 +180,14 @@ Usage of nexttrace:
 
 ## 项目截图
 
-<div align="center">
-Trace结果示例
-<img src=asset/screenshot.png alt="NextTrace Screenshot" />
-LookingGlass功能示例
-<img src=asset/screenshot-web.png alt="NextTrace Web Screenshot" />
-traceMap功能示例
-<img src=asset/screenshot-traceMap.png alt="NextTrace traceMap Screenshot" />
+- Trace 结果示例
+  ![NextTrace Screenshot](asset/screenshot.png)
 
-</div>
+- LookingGlass 功能示例
+  ![NextTrace Web Screenshot](asset/screenshot-web.png)
+
+- traceMap 功能示例
+  ![NextTrace traceMap Screenshot](asset/screenshot-traceMap.png)
 
 ## Thanks
 
@@ -238,3 +237,7 @@ This product includes IP2Location LITE data available from <a href="https://lite
 ### Others
 
 其他第三方 API 尽管集成在本项目内，但是具体的 TOS 以及 AUP，请详见第三方 API 官网。如遇到 IP 数据错误，也请直接联系他们纠错。
+
+✨NextTrace `traceMap` 的后端也开源啦
+
+[GitHub - tsosunchia/traceMap: NextTrace traceMap BackEnd](https://github.com/tsosunchia/traceMap)
