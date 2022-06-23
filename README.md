@@ -75,6 +75,13 @@ nexttrace -U 1.0.0.1
 nexttrace -U -p 53 1.0.0.1
 ```
 
+`NextTrace` 现已支持 `traceMap`，可以将路由显示在地图上
+
+```bash
+# 测试完成后，将返回一个查看结果的URL
+nexttrace -M www.bing.com
+```
+
 `NextTrace`也同样支持一些进阶功能，如 IP 反向解析、并发数控制、模式切换等
 
 ```bash
@@ -84,8 +91,8 @@ nexttrace -q 2 www.hkix.net
 # 无并发，每次只发送一个探测包
 nexttrace -r 1 www.hkix.net
 
-# 打开IP反向解析功能，在IPv6的骨干网定位辅助有较大帮助
-nexttrace -rdns www.bbix.net
+# 关闭默认开启的IP反向解析(rdns)功能
+nexttrace -n www.bing.com
 
 # 特色功能：打印Route-Path图
 # Route-Path图示例：
@@ -131,39 +138,55 @@ NextTrace 所有的的 IP 地理位置`API DEMO`可以参考[这里](https://git
 ```shell
 Usage of nexttrace:
       'nexttrace [option...] <hostname>' or 'nexttrace <hostname> [option...]'
-  -T	Use TCP SYN for tracerouting (default port is 80)
-  -U	Use UDP Package for tracerouting (default port is 53 in UDP)
-  -V	Check Version
-  -c	Manual Config [Advanced]
+  -4    Only Displays IPv4 addresses
+  -6    Only Displays IPv6 addresses
+  -M    Print Trace Map
+  -T    Use TCP SYN for tracerouting (default port is 80)
+  -U    Use UDP Package for tracerouting (default port is 53 in UDP)
+  -V    Check Version
+  -b int
+        Set the begin hop (default 1)
+  -c    Manual Config [Advanced]
   -d string
-    	Choose IP Geograph Data Provider [LeoMoeAPI, IP.SB, IPInfo, IPInsight, IPAPI.com]
-  -f	One-Key Fast Traceroute
+        Choose IP Geograph Data Provider [LeoMoeAPI, IP.SB, IPInfo, IPInsight, IPAPI.com]
+  -f    One-Key Fast Traceroute
+  -fix
+        Fix IP Geo Mode
+  -fix-city string
+        Set City/Area (For administrator use only)
+  -fix-country string
+        Set Country (For administrator use only)
+  -fix-prov string
+        Set Province/Region (For administrator use only)
+  -j    Output with json format
   -m int
-    	Set the max number of hops (max TTL to be reached). (default 30)
-  -n	Disable IP Reverse DNS lookup
+        Set the max number of hops (max TTL to be reached). (default 30)
+  -n    Disable IP Reverse DNS lookup
   -p int
-    	Set SYN Traceroute Port (default 80)
+        Set SYN Traceroute Port (default 80)
   -q int
-    	Set the number of probes per each hop. (default 3)
+        Set the number of probes per each hop. (default 3)
   -r int
-    	Set ParallelRequests number. It should be 1 when there is a multi-routing. (default 18)
+        Set ParallelRequests number. It should be 1 when there is a multi-routing. (default 18)
   -report
-    	Route Path
+        Route Path
   -t int
-    	Set timeout [Millisecond] (default 1000)
+        Set timeout [Millisecond] (default 1000)
   -table
-    	Output trace results as table
-  -w	Enable Web API Method
+        Output trace results as table
+  -w    Enable Web API Method
 
 ```
 
 ## 项目截图
 
 <div align="center">
-
+Trace结果示例
 <img src=asset/screenshot.png alt="NextTrace Screenshot" />
-
+LookingGlass功能示例
 <img src=asset/screenshot-web.png alt="NextTrace Web Screenshot" />
+traceMap功能示例
+<img src=asset/screenshot-traceMap.png alt="NextTrace traceMap Screenshot" />
 
 </div>
 
