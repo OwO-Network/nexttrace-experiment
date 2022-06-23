@@ -6,7 +6,7 @@ import (
 	"github.com/xgadget-lab/nexttrace/trace"
 )
 
-func PrintJson(res *trace.Result) {
+func ParseJson(res *trace.Result) string {
 	r, _ := json.Marshal(res)
-	println(string(r))
+	return string(r)
 }

@@ -16,6 +16,7 @@ import (
 	"github.com/xgadget-lab/nexttrace/printer"
 	"github.com/xgadget-lab/nexttrace/reporter"
 	"github.com/xgadget-lab/nexttrace/trace"
+	"github.com/xgadget-lab/nexttrace/tracemap"
 	"github.com/xgadget-lab/nexttrace/util"
 	"github.com/xgadget-lab/nexttrace/web"
 	"github.com/xgadget-lab/nexttrace/wshandle"
@@ -45,6 +46,7 @@ var beginHop = fSet.Int("b", 1, "Set the begin hop")
 var jsonEnable = fSet.Bool("j", false, "Output with json format")
 var ipv4Only = fSet.Bool("4", false, "Only Displays IPv4 addresses")
 var ipv6Only = fSet.Bool("6", false, "Only Displays IPv6 addresses")
+var maptrace = fSet.Bool("M", false, "Print Trace Map")
 
 func printArgHelp() {
 	fmt.Println("\nArgs Error\nUsage : 'nexttrace [option...] HOSTNAME' or 'nexttrace HOSTNAME [option...]'\nOPTIONS: [-VTU] [-d DATAORIGIN.STR ] [ -m TTL ] [ -p PORT ] [ -q PROBES.COUNT ] [ -r PARALLELREQUESTS.COUNT ] [-rdns] [ -table ] -report")
@@ -227,7 +229,9 @@ func main() {
 	}
 
 	if *jsonEnable {
-		printer.PrintJson(res)
+		r := printer.ParseJson(res)
+		fmt.Println(r)
+		tracemap.GetMapUrl(r)
 		<-time.After(10 * time.Millisecond)
 		return
 	}
@@ -239,6 +243,12 @@ func main() {
 	if *routePath || configData.AlwaysRoutePath {
 		r := reporter.New(res, ip.String())
 		r.Print()
+	}
+
+	if *maptrace {
+		r := printer.ParseJson(res)
+		tracemap.GetMapUrl(r)
+		<-time.After(10 * time.Millisecond)
 	}
 
 }
