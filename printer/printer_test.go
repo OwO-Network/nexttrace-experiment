@@ -12,7 +12,7 @@ import (
 )
 
 func TestPrintTraceRouteNav(t *testing.T) {
-	PrintTraceRouteNav(util.DomainLookUp("1.1.1.1", false), "1.1.1.1", "dataOrigin")
+	PrintTraceRouteNav(util.DomainLookUp("1.1.1.1", true, false, false), "1.1.1.1", "LeoMoeAPI")
 }
 
 var testGeo = &ipgeo.IPGeoData{
