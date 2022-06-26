@@ -137,10 +137,10 @@ func main() {
 		ip = util.DomainLookUp(domain, *ipv4Only, *ipv6Only, *jsonEnable)
 	}
 
-	if ip.To4() == nil && strings.ToUpper(*dataOrigin) == "LEOMOEAPI" {
-		// IPv6 不使用 LeoMoeAPI
-		*dataOrigin = "ipinsight"
-	}
+	// if ip.To4() == nil && strings.ToUpper(*dataOrigin) == "LEOMOEAPI" {
+	// 	// IPv6 不使用 LeoMoeAPI
+	// 	*dataOrigin = "ipinsight"
+	// }
 
 	if strings.ToUpper(*dataOrigin) == "LEOMOEAPI" {
 		w := wshandle.New()
