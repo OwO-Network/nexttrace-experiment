@@ -8,7 +8,9 @@
 
 一款开源的可视化路由跟踪工具，使用 Golang 开发。
 
-这是`NextTrace`加强版，旨在提供高度可定制化的可视化 Traceroute 工具。
+NextTrace 一共有2个版本，专注于轻量的 [Lite 版本](https://github.com/xgadget-lab/nexttrace)以及更面向发烧友的 Enhanced 版本。
+
+PS：Enhanced版本旨在提供高度可定制化的可视化 Traceroute 工具，如果需要轻量化，请使用Lite版本
 
 ## How To Use
 
@@ -241,3 +243,9 @@ This product includes IP2Location LITE data available from <a href="https://lite
 ✨NextTrace `traceMap` 的后端也开源啦
 
 [GitHub - tsosunchia/traceMap: NextTrace traceMap BackEnd](https://github.com/tsosunchia/traceMap)
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=OwO-Network/nexttrace-enhanced,xgadget-lab/nexttrace&type=Date)](https://star-history.com/#OwO-Network/nexttrace-enhanced&xgadget-lab/nexttrace&Date)
+
+
