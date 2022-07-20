@@ -12,6 +12,8 @@ import (
 )
 
 type WsConn struct {
+	Connecting   bool
+	Connected    bool            // 连接状态
 	MsgSendCh    chan string     // 消息发送通道
 	MsgReceiveCh chan string     // 消息接收通道
 	Done         chan struct{}   // 发送结束通道
@@ -23,15 +25,28 @@ type WsConn struct {
 
 var wsconn *WsConn
 
+func (c *WsConn) keepAlive() {
+	for {
+		if !c.Connected && !c.Connecting {
+			c.Connecting = true
+			New()
+		}
+	}
+}
+
 func (c *WsConn) messageReceiveHandler() {
+	go c.keepAlive()
 	defer close(c.Done)
 	for {
-		_, msg, err := c.Conn.ReadMessage()
-		if err != nil {
-			// log.Println("read:", err)
-			return
+		if c.Connected {
+			_, msg, err := c.Conn.ReadMessage()
+			if err != nil {
+				// 读取信息出错，连接已经意外断开
+				log.Println(err)
+				c.Connected = false
+			}
+			c.MsgReceiveCh <- string(msg)
 		}
-		c.MsgReceiveCh <- string(msg)
 	}
 }
 
@@ -53,7 +68,7 @@ func (c *WsConn) messageSendHandler() {
 			err := c.Conn.WriteMessage(websocket.CloseMessage, websocket.FormatCloseMessage(websocket.CloseNormalClosure, ""))
 			if err != nil {
 				log.Println("write close:", err)
-				return
+				os.Exit(1)
 			}
 			select {
 			// 等到了结果，直接退出
@@ -76,16 +91,22 @@ func createWsConn() *WsConn {
 	// log.Printf("connecting to %s", u.String())
 
 	c, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
-	if err != nil {
-		log.Fatal("dial:", err)
-	}
-	// defer c.Close()
-	// 将连接写入WsConn，方便随时可取
+
 	wsconn = &WsConn{
 		Conn:         c,
+		Connected:    true,
+		Connecting:   false,
 		MsgSendCh:    make(chan string),
 		MsgReceiveCh: make(chan string),
 	}
+	log.Println("WebSocket 连接意外断开，正在尝试重连...")
+
+	if err != nil {
+		log.Println("dial:", err)
+		return wsconn
+	}
+	// defer c.Close()
+	// 将连接写入WsConn，方便随时可取
 	wsconn.Done = make(chan struct{})
 	go wsconn.messageReceiveHandler()
 	go wsconn.messageSendHandler()
