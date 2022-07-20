@@ -26,6 +26,16 @@ type WsConn struct {
 var wsconn *WsConn
 
 func (c *WsConn) keepAlive() {
+	go func() {
+		// 开启一个定时器
+		for {
+			<-time.After(time.Second * 54)
+			err := c.Conn.WriteMessage(websocket.TextMessage, []byte("ping"))
+			if err == nil {
+				log.Println("心跳包发送正常，与 API WebSocket 连接正常")
+			}
+		}
+	}()
 	for {
 		if !c.Connected && !c.Connecting {
 			c.Connecting = true
@@ -46,7 +56,9 @@ func (c *WsConn) messageReceiveHandler() {
 				log.Println(err)
 				c.Connected = false
 			}
-			c.MsgReceiveCh <- string(msg)
+			if string(msg) != "pong" {
+				c.MsgReceiveCh <- string(msg)
+			}
 		}
 	}
 }
@@ -97,8 +109,8 @@ func createWsConn() *WsConn {
 		Conn:         c,
 		Connected:    true,
 		Connecting:   false,
-		MsgSendCh:    make(chan string),
-		MsgReceiveCh: make(chan string),
+		MsgSendCh:    make(chan string, 10),
+		MsgReceiveCh: make(chan string, 10),
 	}
 
 	if err != nil {
