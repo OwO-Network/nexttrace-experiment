@@ -42,6 +42,8 @@ func (c *WsConn) keepAlive() {
 			New()
 			log.Println("WebSocket 连接意外断开，正在尝试重连...")
 		}
+		// 降低检测频率，优化 CPU 占用情况
+		<-time.After(100 * time.Millisecond)
 	}
 }
 
