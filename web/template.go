@@ -121,7 +121,7 @@ func writeTemplateFile() error {
 					document.getElementById('inprogress').innerHTML = "路由测试中...";
 					document.getElementById("trace").disabled = true;
 					document.getElementById("inprogress").style.display = "block";
-					fetch('/trace?ip=' + document.getElementById('ip').value + '&method=' + document.getElementById('method').value + '&token=' + document.getElementById('token').value)
+					fetch('trace?ip=' + document.getElementById('ip').value + '&method=' + document.getElementById('method').value + '&token=' + document.getElementById('token').value)
 						.then(function (res) {
 							return res.json();
 						})
