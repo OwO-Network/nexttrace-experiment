@@ -30,6 +30,7 @@ func (c *WsConn) keepAlive() {
 		if !c.Connected && !c.Connecting {
 			c.Connecting = true
 			New()
+			log.Println("WebSocket 连接意外断开，正在尝试重连...")
 		}
 	}
 }
@@ -99,7 +100,6 @@ func createWsConn() *WsConn {
 		MsgSendCh:    make(chan string),
 		MsgReceiveCh: make(chan string),
 	}
-	log.Println("WebSocket 连接意外断开，正在尝试重连...")
 
 	if err != nil {
 		log.Println("dial:", err)
