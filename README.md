@@ -182,13 +182,13 @@ Usage of nexttrace:
 
 ## 项目截图
 
-- Trace 结果示例
+### Trace 结果示例
   ![NextTrace Screenshot](asset/screenshot.png)
 
-- [LookingGlass 功能示例](http://lgdemo.timetotutu.tk:8080)
+### [LookingGlass 功能示例](http://lgdemo.timetotutu.tk:8080)
   ![NextTrace Web Screenshot](asset/screenshot-web.png)
 
-- [traceMap 功能示例](https://api.leo.moe/tracemap/html/demo.html)
+### [traceMap 功能示例](https://api.leo.moe/tracemap/html/demo.html)
   ![NextTrace traceMap Screenshot](asset/screenshot-traceMap.png)
 
 ## Thanks
