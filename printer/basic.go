@@ -11,7 +11,7 @@ var commitID = ""
 
 func Version() {
 	fmt.Println("NextTrace Enhanced", version, buildDate, commitID)
-	fmt.Println("OwO Network Leo (leo.moe) & Vincent (vincent.moe) & zhshch (xzhsh.ch)")
+	fmt.Println("OwO Network Leo (leo.moe) & Vincent (vincent.moe) & Tso (tsosunchia@gmail.com) & zhshch (xzhsh.ch)")
 }
 
 func PrintTraceRouteNav(ip net.IP, domain string, dataOrigin string) {
