@@ -30,33 +30,33 @@ func (c *WsConn) keepAlive() {
 		// 开启一个定时器
 		for {
 			<-time.After(time.Second * 54)
-			err := c.Conn.WriteMessage(websocket.TextMessage, []byte("ping"))
-			if err == nil {
-				log.Println("心跳包发送正常，与 API WebSocket 连接正常")
+			if c.Connected {
+				c.Conn.WriteMessage(websocket.TextMessage, []byte("ping"))
 			}
 		}
 	}()
 	for {
 		if !c.Connected && !c.Connecting {
 			c.Connecting = true
-			New()
-			log.Println("WebSocket 连接意外断开，正在尝试重连...")
+			c.recreateWsConn()
+			// log.Println("WebSocket 连接意外断开，正在尝试重连...")
+			// return
 		}
 		// 降低检测频率，优化 CPU 占用情况
-		<-time.After(100 * time.Millisecond)
+		<-time.After(200 * time.Millisecond)
 	}
 }
 
 func (c *WsConn) messageReceiveHandler() {
-	go c.keepAlive()
-	defer close(c.Done)
+	// defer close(c.Done)
 	for {
 		if c.Connected {
 			_, msg, err := c.Conn.ReadMessage()
 			if err != nil {
 				// 读取信息出错，连接已经意外断开
-				log.Println(err)
+				// log.Println(err)
 				c.Connected = false
+				return
 			}
 			if string(msg) != "pong" {
 				c.MsgReceiveCh <- string(msg)
@@ -70,12 +70,18 @@ func (c *WsConn) messageSendHandler() {
 		// 循环监听发送
 		select {
 		case <-c.Done:
+			log.Println("发送协程已经退出")
 			return
 		case t := <-c.MsgSendCh:
-			err := c.Conn.WriteMessage(websocket.TextMessage, []byte(t))
-			if err != nil {
-				log.Println("write:", err)
-				return
+			// log.Println(t)
+			if !c.Connected {
+				c.MsgReceiveCh <- `{"ip":"` + t + `", "asnumber":"API服务端异常"}`
+			} else {
+				err := c.Conn.WriteMessage(websocket.TextMessage, []byte(t))
+				if err != nil {
+					log.Println("write:", err)
+					return
+				}
 			}
 		// 来自终端的中断运行请求
 		case <-c.Interrupt:
@@ -95,6 +101,27 @@ func (c *WsConn) messageSendHandler() {
 			// return
 		}
 	}
+}
+
+func (c *WsConn) recreateWsConn() {
+	u := url.URL{Scheme: "wss", Host: "api.leo.moe", Path: "/v2/ipGeoWs"}
+	// log.Printf("connecting to %s", u.String())
+
+	ws, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
+	c.Conn = ws
+	if err != nil {
+		log.Println("dial:", err)
+		// <-time.After(time.Second * 1)
+		c.Connected = false
+		c.Connecting = false
+		return
+	} else {
+		c.Connected = true
+	}
+	c.Connecting = false
+
+	c.Done = make(chan struct{})
+	go c.messageReceiveHandler()
 }
 
 func createWsConn() *WsConn {
@@ -117,11 +144,17 @@ func createWsConn() *WsConn {
 
 	if err != nil {
 		log.Println("dial:", err)
+		// <-time.After(time.Second * 1)
+		wsconn.Connected = false
+		wsconn.Done = make(chan struct{})
+		go wsconn.keepAlive()
+		go wsconn.messageSendHandler()
 		return wsconn
 	}
 	// defer c.Close()
 	// 将连接写入WsConn，方便随时可取
 	wsconn.Done = make(chan struct{})
+	go wsconn.keepAlive()
 	go wsconn.messageReceiveHandler()
 	go wsconn.messageSendHandler()
 	return wsconn
