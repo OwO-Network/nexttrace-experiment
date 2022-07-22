@@ -82,7 +82,7 @@ func (c *WsConn) messageSendHandler() {
 			// 向 websocket 发起关闭连接任务
 			err := c.Conn.WriteMessage(websocket.CloseMessage, websocket.FormatCloseMessage(websocket.CloseNormalClosure, ""))
 			if err != nil {
-				log.Println("write close:", err)
+				// log.Println("write close:", err)
 				os.Exit(1)
 			}
 			select {
