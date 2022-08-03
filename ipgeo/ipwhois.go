@@ -1,7 +1,7 @@
 package ipgeo
 
 import (
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"time"
@@ -22,7 +22,7 @@ func IPWHOIS(ip string) (*IPGeoData, error) {
 		log.Println("ipwho.is 请求超时(2s)，请切换其他API使用")
 		return nil, err
 	}
-	body, _ := ioutil.ReadAll(content.Body)
+	body, _ := io.ReadAll(content.Body)
 	res := gjson.ParseBytes(body)
 
 	var country string
