@@ -3,6 +3,8 @@ package printer
 import (
 	"fmt"
 	"net"
+
+	"github.com/fatih/color"
 )
 
 var version = "v0.0.0.alpha"
@@ -10,8 +12,13 @@ var buildDate = ""
 var commitID = ""
 
 func Version() {
-	fmt.Println("NextTrace Enhanced", version, buildDate, commitID)
-	fmt.Println("OwO Network Leo (leo.moe) & Vincent (vincent.moe) & Tso (tsosunchia@gmail.com) & zhshch (xzhsh.ch)")
+	fmt.Fprintf(color.Output, "%s %s %s %s\n",
+		color.New(color.FgWhite, color.Bold).Sprintf("%s", "NextTrace Enhanced"),
+		color.New(color.FgHiBlack, color.Bold).Sprintf("%s", version),
+		color.New(color.FgWhite, color.Bold).Sprintf("%s", buildDate),
+		color.New(color.FgHiBlack, color.Bold).Sprintf("%s", commitID),
+	)
+	// fmt.Println("OwO Network Leo (leo.moe) & Vincent (vincent.moe) & Tso (tsosunchia@gmail.com) & zhshch (xzhsh.ch)")
 }
 
 func PrintTraceRouteNav(ip net.IP, domain string, dataOrigin string) {
