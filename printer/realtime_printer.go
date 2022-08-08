@@ -9,7 +9,7 @@ import (
 )
 
 func RealtimePrinter(res *trace.Result, ttl int) {
-	fmt.Printf("%s  ", color.New(color.FgHiYellow, color.Bold).Sprintf("%-2d", ttl))
+	fmt.Printf("%s  ", color.New(color.FgHiYellow, color.Bold).Sprintf("%-2d", ttl+1))
 	// HopPrinter(res.Hops[ttl][i])
 
 	// 去重
@@ -55,11 +55,12 @@ func RealtimePrinter(res *trace.Result, ttl int) {
 
 		i, _ := strconv.Atoi(v[0])
 
-		fmt.Fprintf(color.Output, "%s %s %s, %s %s\n    %s   ",
+		fmt.Fprintf(color.Output, "%s %s %s %s %s %s\n    %s   ",
 			color.New(color.FgHiGreen, color.Bold).Sprintf("%-6s", res.Hops[ttl][i].Geo.Asnumber),
 			color.New(color.FgWhite, color.Bold).Sprintf("%s", res.Hops[ttl][i].Geo.Country),
 			color.New(color.FgWhite, color.Bold).Sprintf("%s", res.Hops[ttl][i].Geo.Prov),
 			color.New(color.FgWhite, color.Bold).Sprintf("%s", res.Hops[ttl][i].Geo.City),
+			color.New(color.FgWhite, color.Bold).Sprintf("%s", res.Hops[ttl][i].Geo.District),
 			color.New(color.FgHiBlack, color.Bold).Sprintf("%-6s", res.Hops[ttl][i].Geo.Owner),
 			color.New(color.FgHiBlack, color.Bold).Sprintf("%-20s", res.Hops[ttl][0].Hostname),
 		)
