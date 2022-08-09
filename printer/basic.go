@@ -15,10 +15,13 @@ func Version() {
 	fmt.Fprintf(color.Output, "%s %s %s %s\n",
 		color.New(color.FgWhite, color.Bold).Sprintf("%s", "NextTrace Enhanced"),
 		color.New(color.FgHiBlack, color.Bold).Sprintf("%s", version),
-		color.New(color.FgWhite, color.Bold).Sprintf("%s", buildDate),
+		color.New(color.FgHiBlack, color.Bold).Sprintf("%s", buildDate),
 		color.New(color.FgHiBlack, color.Bold).Sprintf("%s", commitID),
 	)
-	// fmt.Println("OwO Network Leo (leo.moe) & Vincent (vincent.moe) & Tso (tsosunchia@gmail.com) & zhshch (xzhsh.ch)")
+}
+
+func CopyRight() {
+	fmt.Println("OwO Network Vincent (vincent.moe) & Tso (tsosunchia@gmail.com) & zhshch (xzhsh.ch) & Leo (leo.moe)")
 }
 
 func PrintTraceRouteNav(ip net.IP, domain string, dataOrigin string) {

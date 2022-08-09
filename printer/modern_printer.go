@@ -10,7 +10,6 @@ import (
 
 func RealtimePrinter(res *trace.Result, ttl int) {
 	fmt.Printf("%s  ", color.New(color.FgHiYellow, color.Bold).Sprintf("%-2d", ttl+1))
-	// HopPrinter(res.Hops[ttl][i])
 
 	// 去重
 	var latestIP string
@@ -50,19 +49,28 @@ func RealtimePrinter(res *trace.Result, ttl int) {
 			fmt.Printf("%4s", "")
 		}
 		fmt.Fprintf(color.Output, "%s",
-			color.New(color.FgWhite, color.Bold).Sprintf("%-16s", ip),
+			color.New(color.FgWhite, color.Bold).Sprintf("%-15s", ip),
 		)
 
 		i, _ := strconv.Atoi(v[0])
 
-		fmt.Fprintf(color.Output, "%s %s %s %s %s %s\n    %s   ",
-			color.New(color.FgHiGreen, color.Bold).Sprintf("%-6s", res.Hops[ttl][i].Geo.Asnumber),
+		if res.Hops[ttl][i].Geo.Asnumber != "" {
+			fmt.Fprintf(color.Output, " %s", color.New(color.FgHiGreen, color.Bold).Sprintf("AS%-6s", res.Hops[ttl][i].Geo.Asnumber))
+		} else {
+			fmt.Printf(" %-8s", "*")
+		}
+
+		if res.Hops[ttl][i].Geo.Country == "" {
+			res.Hops[ttl][i].Geo.Country = "LAN Address"
+		}
+
+		fmt.Fprintf(color.Output, " %s %s %s %s %s\n    %s   ",
 			color.New(color.FgWhite, color.Bold).Sprintf("%s", res.Hops[ttl][i].Geo.Country),
 			color.New(color.FgWhite, color.Bold).Sprintf("%s", res.Hops[ttl][i].Geo.Prov),
 			color.New(color.FgWhite, color.Bold).Sprintf("%s", res.Hops[ttl][i].Geo.City),
 			color.New(color.FgWhite, color.Bold).Sprintf("%s", res.Hops[ttl][i].Geo.District),
-			color.New(color.FgHiBlack, color.Bold).Sprintf("%-6s", res.Hops[ttl][i].Geo.Owner),
-			color.New(color.FgHiBlack, color.Bold).Sprintf("%-20s", res.Hops[ttl][0].Hostname),
+			fmt.Sprintf("%-6s", res.Hops[ttl][i].Geo.Owner),
+			color.New(color.FgHiBlack, color.Bold).Sprintf("%-22s", res.Hops[ttl][0].Hostname),
 		)
 
 		for j := 1; j < len(v); j++ {

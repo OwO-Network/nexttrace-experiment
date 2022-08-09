@@ -43,6 +43,7 @@ var country = fSet.String("fix-country", "", "Set Country")
 var prov = fSet.String("fix-prov", "", "Set Province/Region")
 var city = fSet.String("fix-city", "", "Set City/Area")
 var beginHop = fSet.Int("b", 1, "Set the begin hop")
+var classicPrint = fSet.Bool("classic", false, "Classic Output trace results like BestTrace")
 var jsonEnable = fSet.Bool("j", false, "Output with json format")
 var ipv4Only = fSet.Bool("4", false, "Only Displays IPv4 addresses")
 var ipv6Only = fSet.Bool("6", false, "Only Displays IPv6 addresses")
@@ -76,6 +77,7 @@ func flagApply() string {
 
 	// Print Version
 	if *ver {
+		printer.CopyRight()
 		os.Exit(0)
 	}
 
@@ -187,7 +189,11 @@ func main() {
 	}
 
 	if !*tablePrint && !configData.TablePrintDefault && !*jsonEnable {
-		conf.RealtimePrinter = printer.RealtimePrinter
+		if *classicPrint {
+			conf.RealtimePrinter = printer.ClassicPrinter
+		} else {
+			conf.RealtimePrinter = printer.RealtimePrinter
+		}
 	}
 
 	res, err := trace.Traceroute(m, conf)
