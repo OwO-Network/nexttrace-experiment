@@ -21,7 +21,27 @@ func Version() {
 }
 
 func CopyRight() {
-	fmt.Println("OwO Network Vincent (vincent.moe) & Tso (tsosunchia@gmail.com) & zhshch (xzhsh.ch) & Leo (leo.moe)")
+	fmt.Fprintf(color.Output, "%s\n%s %s\n%s %s\n%s %s\n%s %s\n\n",
+		color.New(color.FgGreen, color.Bold).Sprintf("%s", "NextTrace Project Contributor"),
+		color.New(color.FgWhite, color.Bold).Sprintf("%s", "Tso"),
+		color.New(color.FgHiBlack, color.Bold).Sprintf("%s", "tsosunchia@gmail.com"),
+		color.New(color.FgWhite, color.Bold).Sprintf("%s", "Vincent"),
+		color.New(color.FgHiBlack, color.Bold).Sprintf("%s", "vincent.moe"),
+		color.New(color.FgWhite, color.Bold).Sprintf("%s", "zhshch"),
+		color.New(color.FgHiBlack, color.Bold).Sprintf("%s", "xzhsh.ch"),
+		color.New(color.FgWhite, color.Bold).Sprintf("%s", "Leo"),
+		color.New(color.FgHiBlack, color.Bold).Sprintf("%s", "leo.moe"),
+	)
+
+	PluginCopyRight()
+}
+
+func PluginCopyRight() {
+	fmt.Fprintf(color.Output, "%s\n%s %s\n",
+		color.New(color.FgGreen, color.Bold).Sprintf("%s", "NextTrace Enhanced Map Plugin"),
+		color.New(color.FgWhite, color.Bold).Sprintf("%s", "Tso"),
+		color.New(color.FgHiBlack, color.Bold).Sprintf("%s", "tsosunchia@gmail.com"),
+	)
 }
 
 func PrintTraceRouteNav(ip net.IP, domain string, dataOrigin string) {
