@@ -21,16 +21,22 @@ func Version() {
 }
 
 func CopyRight() {
-	fmt.Fprintf(color.Output, "%s\n%s %s\n%s %s\n%s %s\n%s %s\n\n",
-		color.New(color.FgGreen, color.Bold).Sprintf("%s", "NextTrace Project Contributor"),
-		color.New(color.FgWhite, color.Bold).Sprintf("%s", "Tso"),
-		color.New(color.FgHiBlack, color.Bold).Sprintf("%s", "tsosunchia@gmail.com"),
-		color.New(color.FgWhite, color.Bold).Sprintf("%s", "Vincent"),
-		color.New(color.FgHiBlack, color.Bold).Sprintf("%s", "vincent.moe"),
-		color.New(color.FgWhite, color.Bold).Sprintf("%s", "zhshch"),
-		color.New(color.FgHiBlack, color.Bold).Sprintf("%s", "xzhsh.ch"),
+	fmt.Fprintf(color.Output, "%s\n%s\n%s %s\n\n%s\n%s %s\n%s %s\n\n%s\n%s\n%s %s\n%s %s\n\n",
+		color.New(color.FgCyan, color.Bold).Sprintf("%s", "About NextTrace"),
+		color.New(color.FgGreen, color.Bold).Sprintf("%s", "NextTrace Project Creator"),
 		color.New(color.FgWhite, color.Bold).Sprintf("%s", "Leo"),
 		color.New(color.FgHiBlack, color.Bold).Sprintf("%s", "leo.moe"),
+		color.New(color.FgGreen, color.Bold).Sprintf("%s", "NextTrace Project Maintainer"),
+		color.New(color.FgWhite, color.Bold).Sprintf("%s", "Vincent"),
+		color.New(color.FgHiBlack, color.Bold).Sprintf("%s", "vincent.moe"),
+		color.New(color.FgWhite, color.Bold).Sprintf("%s", "Leo"),
+		color.New(color.FgHiBlack, color.Bold).Sprintf("%s", "leo.moe"),
+		color.New(color.FgCyan, color.Bold).Sprintf("%s", "Special Acknowledgement List"),
+		color.New(color.FgGreen, color.Bold).Sprintf("%s", "NextTrace Major Contributor"),
+		color.New(color.FgWhite, color.Bold).Sprintf("%s", "Tso"),
+		color.New(color.FgHiBlack, color.Bold).Sprintf("%s", "tsosunchia@gmail.com"),
+		color.New(color.FgWhite, color.Bold).Sprintf("%s", "zhshch"),
+		color.New(color.FgHiBlack, color.Bold).Sprintf("%s", "xzhsh.ch"),
 	)
 
 	PluginCopyRight()
@@ -38,7 +44,7 @@ func CopyRight() {
 
 func PluginCopyRight() {
 	fmt.Fprintf(color.Output, "%s\n%s %s\n",
-		color.New(color.FgGreen, color.Bold).Sprintf("%s", "NextTrace Enhanced Map Plugin"),
+		color.New(color.FgGreen, color.Bold).Sprintf("%s", "NextTrace Map Plugin Author"),
 		color.New(color.FgWhite, color.Bold).Sprintf("%s", "Tso"),
 		color.New(color.FgHiBlack, color.Bold).Sprintf("%s", "tsosunchia@gmail.com"),
 	)
