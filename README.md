@@ -212,27 +212,30 @@ Usage of nexttrace:
 |      ISP       |  类型  |  数据源   | 占比 |
 | :------------: | :----: | :-------: | :--: |
 | 电信/联通/移动 | 骨干网 | NextTrace | 10%  |
-| 电信/联通/移动 | 城域网 | 埃文科技  | 90%  |
+| 电信/联通/移动 | 城域网 | IPDATA  | 10%  |
+| 电信/联通/移动 | 城域网 | 埃文科技  | 80%  |
 
 #### WorldWide
 
 |   ISP   |  类型  |  数据源   | 占比 |
 | :-----: | :----: | :-------: | :--: |
-| Tier-01 | 骨干网 |  IPInfo   |  2%  |
+| Tier-01 | 骨干网 |  IPInfo   |  5%  |
 | Tier-01 | 骨干网 | 埃文科技  |  3%  |
-| Tier-01 | 骨干网 | IPInSight |  5%  |
-| Tier-01 | 城域网 | IPInSight | 90%  |
+| Tier-01 | 骨干网 | IPInSight |  2%  |
+| Tier-01 | 城域网 | IPInfo | 90%  |
 
 |  ISP   |  类型  |  数据源   | 占比 |
 | :----: | :----: | :-------: | :--: |
-| Others | 骨干网 | IPInSight |  5%  |
-| Others | 城域网 | IPInSight | 95%  |
+| Others | 骨干网 | IPInfo |  5%  |
+| Others | 城域网 | IPInfo | 95%  |
 
 ### IPv6 Database
 
 | ISP | 类型 |      数据源      | 占比 |
 | :-: | :--: | :--------------: | :--: |
-| All | 全部 | IP2Location Lite | 100% |
+| All | 全部 | NextTrace | 20% |
+| All | 全部 | IP2Location | 15% |
+| All | 全部 | 埃文科技 | 65% |
 
 This product includes IP2Location LITE data available from <a href="https://lite.ip2location.com">https://lite.ip2location.com</a>.
 
@@ -244,8 +247,7 @@ This product includes IP2Location LITE data available from <a href="https://lite
 
 [GitHub - tsosunchia/traceMap: NextTrace traceMap BackEnd](https://github.com/tsosunchia/traceMap)
 
-## Star History
+## Stargazers over time
 
-[![Star History Chart](https://api.star-history.com/svg?repos=OwO-Network/nexttrace-enhanced,xgadget-lab/nexttrace&type=Date)](https://star-history.com/#OwO-Network/nexttrace-enhanced&xgadget-lab/nexttrace&Date)
-
+[![Stargazers over time](https://starchart.cc/OwO-Network/nexttrace-enhanced.svg)](https://starchart.cc/OwO-Network/nexttrace-enhanced)
 
