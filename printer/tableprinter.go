@@ -17,6 +17,7 @@ type rowData struct {
 	IP       string
 	Latency  string
 	Asnumber string
+	Whois    string
 	Country  string
 	Prov     string
 	City     string
@@ -34,12 +35,12 @@ func TracerouteTablePrinter(res *trace.Result) {
 				data.Hop = ""
 			}
 			if data.Country == "" && data.Prov == "" && data.City == "" {
-				tbl.AddRow(data.Hop, data.IP, data.Latency, data.Asnumber, "", data.Owner)
+				tbl.AddRow(data.Hop, data.IP, data.Latency, data.Asnumber, data.Whois, "", data.Owner)
 			} else {
 				if data.City != "" {
-					tbl.AddRow(data.Hop, data.IP, data.Latency, data.Asnumber, data.Country+", "+data.Prov+", "+data.City, data.Owner)
+					tbl.AddRow(data.Hop, data.IP, data.Latency, data.Asnumber, data.Whois, data.Country+", "+data.Prov+", "+data.City, data.Owner)
 				} else {
-					tbl.AddRow(data.Hop, data.IP, data.Latency, data.Asnumber, data.Country + ", " + data.Prov, data.Owner)
+					tbl.AddRow(data.Hop, data.IP, data.Latency, data.Asnumber, data.Whois, data.Country+", "+data.Prov, data.Owner)
 				}
 
 			}
@@ -54,7 +55,7 @@ func New() table.Table {
 	headerFmt := color.New(color.FgGreen, color.Underline).SprintfFunc()
 	columnFmt := color.New(color.FgYellow).SprintfFunc()
 
-	tbl := table.New("Hop", "IP", "Lantency", "ASN", "Location", "Owner")
+	tbl := table.New("Hop", "IP", "Lantency", "ASN", "IPWhois", "Location", "Owner")
 	tbl.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
 	return tbl
 }
@@ -107,6 +108,7 @@ func tableDataGenerator(h trace.Hop) *rowData {
 			City:     h.Geo.City,
 			District: h.Geo.District,
 			Owner:    h.Geo.Owner,
+			Whois:    h.Geo.Whois,
 		}
 
 		if h.Geo == nil {
