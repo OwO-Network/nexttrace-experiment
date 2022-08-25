@@ -63,25 +63,27 @@ func RealtimePrinter(res *trace.Result, ttl int) {
 		i, _ := strconv.Atoi(v[0])
 
 		if res.Hops[ttl][i].Geo.Asnumber != "" {
+			fmt.Fprintf(color.Output, " %s", color.New(color.FgHiGreen, color.Bold).Sprintf("AS%-6s", res.Hops[ttl][i].Geo.Asnumber))
+		} else {
+			fmt.Printf(" %-8s", "*")
+		}
+
+		if net.ParseIP(ip).To4() != nil {
 			whoisFormat := strings.Split(res.Hops[ttl][i].Geo.Whois, "-")
 			if len(whoisFormat) > 1 {
 				whoisFormat[0] = strings.Join(whoisFormat[:2], "-")
 			}
-			fmt.Fprintf(color.Output, " %s", color.New(color.FgHiGreen, color.Bold).Sprintf("AS%-6s", res.Hops[ttl][i].Geo.Asnumber))
-			if net.ParseIP(ip).To4() != nil {
-				if whoisFormat[0] != "" {
-					whoisFormat[0] = "[" + whoisFormat[0] + "]"
-				}
-				fmt.Fprintf(color.Output, " %s", color.New(color.FgHiGreen, color.Bold).Sprintf("%-16s", whoisFormat[0]))
-			}
 
-		} else {
-			fmt.Printf(" %-8s", "*")
+			if whoisFormat[0] != "" {
+				whoisFormat[0] = "[" + whoisFormat[0] + "]"
+			}
+			fmt.Fprintf(color.Output, " %s", color.New(color.FgHiGreen, color.Bold).Sprintf("%-16s", whoisFormat[0]))
 		}
 
 		if res.Hops[ttl][i].Geo.Country == "" {
 			res.Hops[ttl][i].Geo.Country = "LAN Address"
 		}
+
 		if net.ParseIP(ip).To4() != nil {
 
 			fmt.Fprintf(color.Output, " %s %s %s %s %s\n    %s   ",
