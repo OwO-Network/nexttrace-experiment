@@ -48,6 +48,7 @@ var jsonEnable = fSet.Bool("j", false, "Output with json format")
 var ipv4Only = fSet.Bool("4", false, "Only Displays IPv4 addresses")
 var ipv6Only = fSet.Bool("6", false, "Only Displays IPv6 addresses")
 var maptrace = fSet.Bool("M", false, "Print Trace Map")
+var src_addr = fSet.String("S", "", "Use the following IP address as the source address in outgoing packets")
 
 func printArgHelp() {
 	fmt.Println("\nArgs Error\nUsage : 'nexttrace [option...] HOSTNAME' or 'nexttrace HOSTNAME [option...]'\nOPTIONS: [-VTU] [-d DATAORIGIN.STR ] [ -m TTL ] [ -p PORT ] [ -q PROBES.COUNT ] [ -r PARALLELREQUESTS.COUNT ] [-rdns] [ -table ] -report")
@@ -113,6 +114,15 @@ func main() {
 		log.Fatalln("Traceroute requires root/sudo privileges.")
 	}
 
+	// devices, _ := pcap.FindAllDevs()
+
+	// // 找到所有的设备
+	// for _, device := range devices {
+	// 	for _, address := range device.Addresses {
+	// 		fmt.Println(device.Name, "-", address.IP.String())
+	// 	}
+	// }
+
 	configData, err := config.Read()
 
 	// Initialize Default Config
@@ -177,6 +187,7 @@ func main() {
 	}
 
 	var conf = trace.Config{
+		SrcAddr:          *src_addr,
 		BeginHop:         *beginHop,
 		DestIP:           ip,
 		DestPort:         *port,
