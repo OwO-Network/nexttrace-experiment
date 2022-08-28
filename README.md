@@ -183,7 +183,7 @@ Usage of nexttrace:
 ## 项目截图
 
 ### Trace 结果示例
-  ![NextTrace Screenshot](asset/screenshot.png)
+![image](https://user-images.githubusercontent.com/13616352/186600128-5985e713-502b-4382-b6cf-cc279904e31b.png)
 
 ### [LookingGlass 功能示例](http://lgdemo.timetotutu.tk:8080)
   ![NextTrace Web Screenshot](asset/screenshot-web.png)
