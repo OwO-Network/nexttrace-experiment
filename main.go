@@ -10,7 +10,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/google/gopacket/pcap"
 	"github.com/xgadget-lab/nexttrace/config"
 	fastTrace "github.com/xgadget-lab/nexttrace/fast_trace"
 	"github.com/xgadget-lab/nexttrace/ipgeo"
@@ -148,14 +147,12 @@ func main() {
 	// }
 
 	if *src_dev != "" {
-		devices, _ := pcap.FindAllDevs()
+		dev, _ := net.InterfaceByName(*src_dev)
 
-		// 找到所有的设备
-		for _, device := range devices {
-			for _, address := range device.Addresses {
-				// 输入网卡参数和网卡匹配并且网卡IP类型和路由测试的IP类型相同时
-				if (device.Name == *src_dev) && ((address.IP.To4() == nil) == (ip.To4() == nil)) {
-					*src_addr = address.IP.String()
+		if addrs, err := dev.Addrs(); err == nil {
+			for _, addr := range addrs {
+				if (addr.(*net.IPNet).IP.To4() == nil) == (ip.To4() == nil) {
+					*src_addr = addr.(*net.IPNet).IP.String()
 				}
 			}
 		}
