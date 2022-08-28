@@ -10,6 +10,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/google/gopacket/pcap"
 	"github.com/xgadget-lab/nexttrace/config"
 	fastTrace "github.com/xgadget-lab/nexttrace/fast_trace"
 	"github.com/xgadget-lab/nexttrace/ipgeo"
@@ -49,6 +50,7 @@ var ipv4Only = fSet.Bool("4", false, "Only Displays IPv4 addresses")
 var ipv6Only = fSet.Bool("6", false, "Only Displays IPv6 addresses")
 var maptrace = fSet.Bool("M", false, "Print Trace Map")
 var src_addr = fSet.String("S", "", "Use the following IP address as the source address in outgoing packets")
+var src_dev = fSet.String("D", "", "Use the following Network Devices as the source address in outgoing packets")
 
 func printArgHelp() {
 	fmt.Println("\nArgs Error\nUsage : 'nexttrace [option...] HOSTNAME' or 'nexttrace HOSTNAME [option...]'\nOPTIONS: [-VTU] [-d DATAORIGIN.STR ] [ -m TTL ] [ -p PORT ] [ -q PROBES.COUNT ] [ -r PARALLELREQUESTS.COUNT ] [-rdns] [ -table ] -report")
@@ -114,15 +116,6 @@ func main() {
 		log.Fatalln("Traceroute requires root/sudo privileges.")
 	}
 
-	// devices, _ := pcap.FindAllDevs()
-
-	// // 找到所有的设备
-	// for _, device := range devices {
-	// 	for _, address := range device.Addresses {
-	// 		fmt.Println(device.Name, "-", address.IP.String())
-	// 	}
-	// }
-
 	configData, err := config.Read()
 
 	// Initialize Default Config
@@ -153,6 +146,20 @@ func main() {
 	// 	// IPv6 不使用 LeoMoeAPI
 	// 	*dataOrigin = "ipinsight"
 	// }
+
+	if *src_dev != "" {
+		devices, _ := pcap.FindAllDevs()
+
+		// 找到所有的设备
+		for _, device := range devices {
+			for _, address := range device.Addresses {
+				// 输入网卡参数和网卡匹配并且网卡IP类型和路由测试的IP类型相同时
+				if (device.Name == *src_dev) && ((address.IP.To4() == nil) == (ip.To4() == nil)) {
+					*src_addr = address.IP.String()
+				}
+			}
+		}
+	}
 
 	if strings.ToUpper(*dataOrigin) == "LEOMOEAPI" {
 		w := wshandle.New()
