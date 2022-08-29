@@ -17,6 +17,8 @@ import (
 	"github.com/xgadget-lab/nexttrace/wshandle"
 )
 
+var specificDev, specificAddr string
+
 type FastTracer struct {
 	Preference       config.Preference
 	TracerouteMethod trace.Method
@@ -26,7 +28,21 @@ func (f *FastTracer) tracert(location string, ispCollection ISPCollection) {
 	fmt.Printf("\033[1;33m『%s %s 』\033[0m\n", location, ispCollection.ISPName)
 	fmt.Printf("traceroute to %s, 30 hops max, 32 byte packets\n", ispCollection.IP)
 	ip := net.ParseIP(ispCollection.IP)
+
+	if specificDev != "" {
+		dev, _ := net.InterfaceByName(specificDev)
+
+		if addrs, err := dev.Addrs(); err == nil {
+			for _, addr := range addrs {
+				if (addr.(*net.IPNet).IP.To4() == nil) == (ip.To4() == nil) {
+					specificAddr = addr.(*net.IPNet).IP.String()
+				}
+			}
+		}
+	}
+
 	var conf = trace.Config{
+		SrcAddr:          specificAddr,
 		BeginHop:         1,
 		DestIP:           ip,
 		DestPort:         80,
@@ -122,8 +138,11 @@ func (f *FastTracer) testEDU() {
 	f.tracert(TestIPsCollection.Changsha.Location, TestIPsCollection.Changsha.EDU)
 }
 
-func FastTest(tm bool) {
+func FastTest(tm bool, srcDev string, srcAddr string) {
 	var c string
+
+	specificDev = srcDev
+	specificAddr = srcAddr
 
 	fmt.Println("您想测试哪些ISP的路由？\n1. 国内四网\n2. 电信\n3. 联通\n4. 移动\n5. 教育网")
 	fmt.Print("请选择选项：")

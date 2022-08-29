@@ -50,6 +50,7 @@ var ipv6Only = fSet.Bool("6", false, "Only Displays IPv6 addresses")
 var maptrace = fSet.Bool("M", false, "Print Trace Map")
 var src_addr = fSet.String("S", "", "Use the following IP address as the source address in outgoing packets")
 var src_dev = fSet.String("D", "", "Use the following Network Devices as the source address in outgoing packets")
+var dns_ip = fSet.String("dns", "", "Use the following IP address to resolve domain")
 
 func printArgHelp() {
 	fmt.Println("\nArgs Error\nUsage : 'nexttrace [option...] HOSTNAME' or 'nexttrace HOSTNAME [option...]'\nOPTIONS: [-VTU] [-d DATAORIGIN.STR ] [ -m TTL ] [ -p PORT ] [ -q PROBES.COUNT ] [ -r PARALLELREQUESTS.COUNT ] [-rdns] [ -table ] -report")
@@ -97,7 +98,7 @@ func flagApply() string {
 
 	// -f Fast Test
 	if *fastTest {
-		fastTrace.FastTest(*tcpSYNFlag)
+		fastTrace.FastTest(*tcpSYNFlag, *src_dev, *src_addr)
 		os.Exit(0)
 	}
 
@@ -136,9 +137,9 @@ func main() {
 	var ip net.IP
 
 	if *tcpSYNFlag || *udpPackageFlag {
-		ip = util.DomainLookUp(domain, true, false, *jsonEnable)
+		ip = util.DomainLookUp(domain, *dns_ip, true, false, *jsonEnable)
 	} else {
-		ip = util.DomainLookUp(domain, *ipv4Only, *ipv6Only, *jsonEnable)
+		ip = util.DomainLookUp(domain, *dns_ip, *ipv4Only, *ipv6Only, *jsonEnable)
 	}
 
 	// if ip.To4() == nil && strings.ToUpper(*dataOrigin) == "LEOMOEAPI" {
