@@ -1,10 +1,12 @@
 package util
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net"
 	"os"
+	"time"
 
 	"github.com/fatih/color"
 )
@@ -27,8 +29,24 @@ func LocalIPPort(dstip net.IP) (net.IP, int) {
 	return nil, -1
 }
 
-func DomainLookUp(host string, ipv4Only bool, ipv6Only bool, auto bool) net.IP {
-	ips, err := net.LookupIP(host)
+func DomainLookUp(host string, customDNS string, ipv4Only bool, ipv6Only bool, auto bool) net.IP {
+	// 手动构造 Resolver 以定制化 DNS 服务器 IP 等参数
+	r := &net.Resolver{
+		// 尽管编译器已经禁用 Cgo，这里以防万一，保证无论何种编译环境下都能优先使用 Pure-Go，构造详见 lookup.go 源码
+		PreferGo: true,
+	}
+
+	if customDNS != "" {
+		r.Dial = func(ctx context.Context, network, address string) (net.Conn, error) {
+			d := net.Dialer{
+				Timeout: 5 * time.Second,
+			}
+			// 见文档 - Dial uses context.Background internally; to specify the context, use DialContext.
+			return d.DialContext(ctx, "udp", customDNS+":53")
+		}
+	}
+
+	ips, err := r.LookupHost(context.Background(), host)
 	if err != nil {
 		fmt.Println("Domain " + host + " Lookup Fail.")
 		os.Exit(1)
@@ -37,7 +55,8 @@ func DomainLookUp(host string, ipv4Only bool, ipv6Only bool, auto bool) net.IP {
 	var ipSlice = []net.IP{}
 	var ipv6Flag = false
 
-	for _, ip := range ips {
+	for _, ipStr := range ips {
+		ip := net.ParseIP(ipStr)
 		if ipv4Only {
 			// 仅返回ipv4的ip
 			if ip.To4() != nil {
