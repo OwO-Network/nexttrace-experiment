@@ -45,6 +45,17 @@ nexttrace -table 1.0.0.1
 nexttrace 2606:4700:4700::1111
 ```
 
+`NextTrace` 已支持指定网卡进行路由跟踪
+
+```bash
+# 使用 eth0 网卡
+nexttrace -D eth0 2606:4700:4700::1111
+
+# 使用 eth0 网卡IP
+# 使用网卡IP进行路由跟踪时需要注意跟踪的IP类型应该和网卡IP类型一致（如都为 IPv4）
+nexttrace -S 204.98.134.56 9.9.9.9
+```
+
 `NextTrace` 现已支持 `Web API`，可以通过网络端进行路由跟踪测试
 
 ```bash
@@ -108,7 +119,7 @@ nexttrace -n www.bing.com
 nexttrace -report www.time.com.my
 ```
 
-`NextTrace`支持用户自主选择 IP 数据库（目前支持：`LeoMoeAPI`, `IP.SB`, `IPInfo`, `IPInsight`, `IPAPI.com`）
+`NextTrace` 支持用户自主选择 IP 数据库（目前支持：`LeoMoeAPI`, `IP.SB`, `IPInfo`, `IPInsight`, `IPAPI.com`）
 
 ```bash
 # 可以自行指定IP数据库[此处为IP.SB]，不指定则默认为LeoMoeAPI
@@ -117,6 +128,13 @@ nexttrace -d IP.SB
 ##        TOKEN填写路径：ipgeo/tokens.go
 ## 另外：由于IP.SB被滥用比较严重，会经常出现无法查询的问题，请知悉。
 ##      IPAPI.com限制调用较为严格，如有查询不到的情况，请几分钟后再试。
+```
+
+`NextTrace` 自定义 DNS 解析服务器
+
+```bash
+# 使用 Google DNS 8.8.8.8 解析 www.gstatic.com 的 IP
+nexttrace -dns 8.8.8.8 www.gstatic.com
 ```
 
 `NextTrace`支持参数混合使用
@@ -142,7 +160,11 @@ Usage of nexttrace:
       'nexttrace [option...] <hostname>' or 'nexttrace <hostname> [option...]'
   -4    Only Displays IPv4 addresses
   -6    Only Displays IPv6 addresses
+  -D string
+        Use the following Network Devices as the source address in outgoing packets
   -M    Print Trace Map
+  -S string
+        Use the following IP address as the source address in outgoing packets
   -T    Use TCP SYN for tracerouting (default port is 80)
   -U    Use UDP Package for tracerouting (default port is 53 in UDP)
   -V    Check Version
@@ -151,6 +173,8 @@ Usage of nexttrace:
   -c    Manual Config [Advanced]
   -d string
         Choose IP Geograph Data Provider [LeoMoeAPI, IP.SB, IPInfo, IPInsight, IPAPI.com]
+  -dns string
+        Use the following IP address to resolve domain
   -f    One-Key Fast Traceroute
   -fix
         Fix IP Geo Mode
