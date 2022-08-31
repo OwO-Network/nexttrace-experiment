@@ -18,10 +18,10 @@ PS：Enhanced版本旨在提供高度可定制化的可视化 Traceroute 工具�
 
 ```bash
 # Linux 一键安装脚本
-bash <(curl -Ls https://raw.githubusercontent.com/OwO-Network/nexttrace-enhanced/main/nt_install.sh)
+sudo bash -c "$(curl -Ls https://raw.githubusercontent.com/OwO-Network/nexttrace-enhanced/main/nt_install.sh)"
 
 # GHPROXY 镜像（国内使用）
-bash <(curl -Ls https://ghproxy.com/https://raw.githubusercontent.com/OwO-Network/nexttrace-enhanced/main/nt_install.sh)
+sudo bash -c "$(curl -Ls https://ghproxy.com/https://raw.githubusercontent.com/OwO-Network/nexttrace-enhanced/main/nt_install.sh)"
 
 # 对于macOS或一些支持brew进行包管理的可以使用此命令安装
 brew tap OwO-Network/nexttrace-enhanced && brew install nexttrace
