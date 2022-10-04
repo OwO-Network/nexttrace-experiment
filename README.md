@@ -201,18 +201,20 @@ Usage of nexttrace:
   -table
         Output trace results as table
   -w    Enable Web API Method
-
 ```
 
 ## 项目截图
 
 ### Trace 结果示例
+
 ![image](https://user-images.githubusercontent.com/13616352/186600128-5985e713-502b-4382-b6cf-cc279904e31b.png)
 
 ### [LookingGlass 功能示例](http://lgdemo.timetotutu.tk:8080)
+
   ![NextTrace Web Screenshot](asset/screenshot-web.png)
 
 ### [traceMap 功能示例](https://api.leo.moe/tracemap/html/demo.html)
+
   ![NextTrace traceMap Screenshot](asset/screenshot-traceMap.png)
 
 ## Thanks
@@ -227,41 +229,7 @@ Usage of nexttrace:
 
 [FFEE_CO](https://github.com/fkx4-p)
 
-## IP Database Copyright
-
-### IPv4 Database
-
-#### China
-
-|      ISP       |  类型  |  数据源   | 占比 |
-| :------------: | :----: | :-------: | :--: |
-| 电信/联通/移动 | 骨干网 | NextTrace | 10%  |
-| 电信/联通/移动 | 城域网 | IPDATA  | 10%  |
-| 电信/联通/移动 | 城域网 | 埃文科技  | 80%  |
-
-#### WorldWide
-
-|   ISP   |  类型  |  数据源   | 占比 |
-| :-----: | :----: | :-------: | :--: |
-| Tier-01 | 骨干网 |  IPInfo   |  5%  |
-| Tier-01 | 骨干网 | 埃文科技  |  3%  |
-| Tier-01 | 骨干网 | IPInSight |  2%  |
-| Tier-01 | 城域网 | IPInfo | 90%  |
-
-|  ISP   |  类型  |  数据源   | 占比 |
-| :----: | :----: | :-------: | :--: |
-| Others | 骨干网 | IPInfo |  5%  |
-| Others | 城域网 | IPInfo | 95%  |
-
-### IPv6 Database
-
-| ISP | 类型 |      数据源      | 占比 |
-| :-: | :--: | :--------------: | :--: |
-| All | 全部 | NextTrace | 20% |
-| All | 全部 | IP2Location | 15% |
-| All | 全部 | 埃文科技 | 65% |
-
-This product includes IP2Location LITE data available from <a href="https://lite.ip2location.com">https://lite.ip2location.com</a>.
+# 
 
 ### Others
 
@@ -274,4 +242,3 @@ This product includes IP2Location LITE data available from <a href="https://lite
 ## Stargazers over time
 
 [![Stargazers over time](https://starchart.cc/OwO-Network/nexttrace-enhanced.svg)](https://starchart.cc/OwO-Network/nexttrace-enhanced)
-
