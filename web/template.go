@@ -174,6 +174,17 @@ func writeTemplateFile() error {
 							c6.innerHTML = data[i][0].Geo.Country + " " + data[i][0].Geo.Prov + " " + data[i][0].Geo.City;
 							var c7 = row.insertCell(6);
 							c7.innerHTML = data[i][0].Geo.Owner;
+						} else {
+							var row = table.insertRow(table.rows.length);
+							var c1 = row.insertCell(0);
+							c1.innerHTML = i + 1;
+							var c2 = row.insertCell(1);
+							c2.innerHTML = "*"
+							var c4 = row.insertCell(2);
+							var c4 = row.insertCell(3);
+							var c4 = row.insertCell(4);
+							var c4 = row.insertCell(5);
+							var c4 = row.insertCell(6);
 						}
 	
 					}
