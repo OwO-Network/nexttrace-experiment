@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/xgadget-lab/nexttrace/config"
+	"github.com/OwO-Network/nexttrace-enhanced/config"
 )
 
 type FixData struct {

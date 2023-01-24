@@ -6,8 +6,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/xgadget-lab/nexttrace/ipgeo"
-	"github.com/xgadget-lab/nexttrace/trace"
+	"github.com/OwO-Network/nexttrace-enhanced/ipgeo"
+	"github.com/OwO-Network/nexttrace-enhanced/trace"
 )
 
 type Reporter interface {

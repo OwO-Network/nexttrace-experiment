@@ -10,11 +10,11 @@ import (
 	"strings"
 	"time"
 
+	"github.com/OwO-Network/nexttrace-enhanced/config"
+	"github.com/OwO-Network/nexttrace-enhanced/ipgeo"
+	"github.com/OwO-Network/nexttrace-enhanced/trace"
+	"github.com/OwO-Network/nexttrace-enhanced/wshandle"
 	"github.com/gin-gonic/gin"
-	"github.com/xgadget-lab/nexttrace/config"
-	"github.com/xgadget-lab/nexttrace/ipgeo"
-	"github.com/xgadget-lab/nexttrace/trace"
-	"github.com/xgadget-lab/nexttrace/wshandle"
 )
 
 var confToken string

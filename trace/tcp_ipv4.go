@@ -8,9 +8,9 @@ import (
 	"sync"
 	"time"
 
+	"github.com/OwO-Network/nexttrace-enhanced/util"
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
-	"github.com/xgadget-lab/nexttrace/util"
 	"golang.org/x/net/context"
 	"golang.org/x/net/icmp"
 	"golang.org/x/net/ipv4"
@@ -47,7 +47,7 @@ func (t *TCPTracer) Execute() (*Result, error) {
 	} else {
 		t.tcp, err = net.ListenPacket("ip4:tcp", t.SrcIP.String())
 	}
-	
+
 	if err != nil {
 		return nil, err
 	}

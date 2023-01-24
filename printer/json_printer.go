@@ -3,7 +3,7 @@ package printer
 import (
 	"encoding/json"
 
-	"github.com/xgadget-lab/nexttrace/trace"
+	"github.com/OwO-Network/nexttrace-enhanced/trace"
 )
 
 func ParseJson(res *trace.Result) string {

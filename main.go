@@ -10,16 +10,16 @@ import (
 	"strings"
 	"time"
 
-	"github.com/xgadget-lab/nexttrace/config"
-	fastTrace "github.com/xgadget-lab/nexttrace/fast_trace"
-	"github.com/xgadget-lab/nexttrace/ipgeo"
-	"github.com/xgadget-lab/nexttrace/printer"
-	"github.com/xgadget-lab/nexttrace/reporter"
-	"github.com/xgadget-lab/nexttrace/trace"
-	"github.com/xgadget-lab/nexttrace/tracemap"
-	"github.com/xgadget-lab/nexttrace/util"
-	"github.com/xgadget-lab/nexttrace/web"
-	"github.com/xgadget-lab/nexttrace/wshandle"
+	"github.com/OwO-Network/nexttrace-enhanced/config"
+	fastTrace "github.com/OwO-Network/nexttrace-enhanced/fast_trace"
+	"github.com/OwO-Network/nexttrace-enhanced/ipgeo"
+	"github.com/OwO-Network/nexttrace-enhanced/printer"
+	"github.com/OwO-Network/nexttrace-enhanced/reporter"
+	"github.com/OwO-Network/nexttrace-enhanced/trace"
+	"github.com/OwO-Network/nexttrace-enhanced/tracemap"
+	"github.com/OwO-Network/nexttrace-enhanced/util"
+	"github.com/OwO-Network/nexttrace-enhanced/web"
+	"github.com/OwO-Network/nexttrace-enhanced/wshandle"
 )
 
 var fSet = flag.NewFlagSet("", flag.ExitOnError)

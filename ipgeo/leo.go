@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/tidwall/gjson"
-	"github.com/xgadget-lab/nexttrace/wshandle"
+	"github.com/OwO-Network/nexttrace-enhanced/wshandle"
 )
 
 /***

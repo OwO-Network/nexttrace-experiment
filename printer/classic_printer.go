@@ -3,7 +3,7 @@ package printer
 import (
 	"fmt"
 
-	"github.com/xgadget-lab/nexttrace/trace"
+	"github.com/OwO-Network/nexttrace-enhanced/trace"
 )
 
 func ClassicPrinter(res *trace.Result, ttl int) {

@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/fatih/color"
-	"github.com/xgadget-lab/nexttrace/trace"
+	"github.com/OwO-Network/nexttrace-enhanced/trace"
 )
 
 func RealtimePrinter(res *trace.Result, ttl int) {

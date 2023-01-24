@@ -1,6 +1,6 @@
 package ipgeo
 
-import "github.com/xgadget-lab/nexttrace/config"
+import "github.com/OwO-Network/nexttrace-enhanced/config"
 
 type tokenData struct {
 	ipinsight string

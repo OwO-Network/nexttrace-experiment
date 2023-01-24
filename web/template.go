@@ -3,7 +3,7 @@ package web
 import (
 	"io/ioutil"
 
-	"github.com/xgadget-lab/nexttrace/config"
+	"github.com/OwO-Network/nexttrace-enhanced/config"
 )
 
 func writeTemplateFile() error {

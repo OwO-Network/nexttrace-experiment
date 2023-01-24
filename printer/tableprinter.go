@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/xgadget-lab/nexttrace/ipgeo"
+	"github.com/OwO-Network/nexttrace-enhanced/ipgeo"
 
-	"github.com/xgadget-lab/nexttrace/trace"
+	"github.com/OwO-Network/nexttrace-enhanced/trace"
 
 	"github.com/fatih/color"
 	"github.com/rodaine/table"

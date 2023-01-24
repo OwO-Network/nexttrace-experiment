@@ -1,4 +1,4 @@
-module github.com/xgadget-lab/nexttrace
+module github.com/OwO-Network/nexttrace-enhanced
 
 go 1.18
 

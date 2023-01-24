@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/xgadget-lab/nexttrace/trace"
+	"github.com/OwO-Network/nexttrace-enhanced/trace"
 
-	"github.com/xgadget-lab/nexttrace/ipgeo"
+	"github.com/OwO-Network/nexttrace-enhanced/ipgeo"
 )
 
 var dataOrigin string

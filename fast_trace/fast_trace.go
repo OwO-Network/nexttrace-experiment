@@ -9,12 +9,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/xgadget-lab/nexttrace/config"
-	"github.com/xgadget-lab/nexttrace/ipgeo"
-	"github.com/xgadget-lab/nexttrace/printer"
-	"github.com/xgadget-lab/nexttrace/reporter"
-	"github.com/xgadget-lab/nexttrace/trace"
-	"github.com/xgadget-lab/nexttrace/wshandle"
+	"github.com/OwO-Network/nexttrace-enhanced/config"
+	"github.com/OwO-Network/nexttrace-enhanced/ipgeo"
+	"github.com/OwO-Network/nexttrace-enhanced/printer"
+	"github.com/OwO-Network/nexttrace-enhanced/reporter"
+	"github.com/OwO-Network/nexttrace-enhanced/trace"
+	"github.com/OwO-Network/nexttrace-enhanced/wshandle"
 )
 
 var specificDev, specificAddr string
