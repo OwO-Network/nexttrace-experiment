@@ -47,7 +47,7 @@ var classicPrint = fSet.Bool("classic", false, "Classic Output trace results lik
 var jsonEnable = fSet.Bool("j", false, "Output with json format")
 var ipv4Only = fSet.Bool("4", false, "Only Displays IPv4 addresses")
 var ipv6Only = fSet.Bool("6", false, "Only Displays IPv6 addresses")
-var maptrace = fSet.Bool("M", false, "Print Trace Map")
+var maptrace = fSet.Bool("M", false, "No Print Trace Map")
 var src_addr = fSet.String("S", "", "Use the following IP address as the source address in outgoing packets")
 var src_dev = fSet.String("D", "", "Use the following Network Devices as the source address in outgoing packets")
 var dns_ip = fSet.String("dns", "", "Use the following IP address to resolve domain")
@@ -68,9 +68,15 @@ func flagApply() string {
 	// flag parse
 	if !strings.HasPrefix(os.Args[1], "-") {
 		target = os.Args[1]
-		fSet.Parse(os.Args[2:])
+		err := fSet.Parse(os.Args[2:])
+		if err != nil {
+			return ""
+		}
 	} else {
-		fSet.Parse(os.Args[1:])
+		err := fSet.Parse(os.Args[1:])
+		if err != nil {
+			return ""
+		}
 		target = fSet.Arg(0)
 	}
 
@@ -164,7 +170,10 @@ func main() {
 		w.Interrupt = make(chan os.Signal, 1)
 		signal.Notify(w.Interrupt, os.Interrupt)
 		defer func() {
-			w.Conn.Close()
+			err := w.Conn.Close()
+			if err != nil {
+				return
+			}
 		}()
 	}
 
@@ -229,18 +238,18 @@ func main() {
 			for _, ttlHops := range allHops {
 				if ttlHops.Address != nil {
 					// IP 去重
-					flag := true
+					tFlag := true
 					for _, v := range ipSplice {
 						if v.String() == ttlHops.Address.String() {
-							flag = false
+							tFlag = false
 							break
 						}
 					}
-					if flag {
+					if tFlag {
 						if (ttlHops.Geo.Country != f.Country && f.Country != "") || (ttlHops.Geo.Prov != f.Prov && f.Prov != "") || (ttlHops.Geo.City != f.City && f.City != "") {
 							ipSplice = append(ipSplice, ttlHops.Address)
 						}
-						flag = false
+						tFlag = false
 					}
 				}
 			}
@@ -267,7 +276,7 @@ func main() {
 		r.Print()
 	}
 
-	if *maptrace {
+	if !*maptrace {
 		r := printer.ParseJson(res)
 		tracemap.GetMapUrl(r)
 		<-time.After(10 * time.Millisecond)

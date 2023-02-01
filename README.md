@@ -92,7 +92,8 @@ nexttrace -U -p 53 1.0.0.1
 
 ```bash
 # 测试完成后，将返回一个查看结果的URL
-nexttrace -M www.bing.com
+nexttrace www.bing.com # 默认启用
+nexttrace -M www.bing.com # 不启用该功能
 ```
 
 `NextTrace`也同样支持一些进阶功能，如 IP 反向解析、并发数控制、模式切换等
