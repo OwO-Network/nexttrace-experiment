@@ -1,12 +1,14 @@
 package ipgeo
 
 import (
+	"encoding/json"
 	"errors"
+	"strconv"
 	"sync"
 	"time"
 
-	"github.com/tidwall/gjson"
 	"github.com/OwO-Network/nexttrace-enhanced/wshandle"
+	"github.com/tidwall/gjson"
 )
 
 /***
@@ -52,15 +54,28 @@ func receiveParse() {
 			domain = res.Get("owner").String()
 		}
 
+		m := make(map[string][]string)
+		json.Unmarshal([]byte(res.Get("router").String()), &m)
+
+		lat, _ := strconv.ParseFloat(res.Get("lat").String(), 32)
+		lng, _ := strconv.ParseFloat(res.Get("lng").String(), 32)
+
 		IPPools.pool[gjson.Parse(data).Get("ip").String()] <- IPGeoData{
-			Asnumber: res.Get("asnumber").String(),
-			Country:  res.Get("country").String(),
-			Prov:     res.Get("prov").String(),
-			City:     res.Get("city").String(),
-			District: res.Get("district").String(),
-			Owner:    domain,
-			Isp:      res.Get("isp").String(),
-			Whois:    res.Get("whois").String(),
+			Asnumber:  res.Get("asnumber").String(),
+			Country:   res.Get("country").String(),
+			CountryEn: res.Get("country_en").String(),
+			Prov:      res.Get("prov").String(),
+			ProvEn:    res.Get("prov_en").String(),
+			City:      res.Get("city").String(),
+			CityEn:    res.Get("city_en").String(),
+			District:  res.Get("district").String(),
+			Owner:     domain,
+			Lat:       lat,
+			Lng:       lng,
+			Isp:       res.Get("isp").String(),
+			Whois:     res.Get("whois").String(),
+			Prefix:    res.Get("prefix").String(),
+			Router:    m,
 		}
 	}
 }
