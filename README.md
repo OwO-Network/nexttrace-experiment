@@ -24,7 +24,7 @@ sudo bash -c "$(curl -Ls https://raw.githubusercontent.com/OwO-Network/nexttrace
 sudo bash -c "$(curl -Ls https://ghproxy.com/https://raw.githubusercontent.com/OwO-Network/nexttrace-enhanced/main/nt_install.sh)"
 
 # 对于macOS或一些支持brew进行包管理的可以使用此命令安装
-brew tap OwO-Network/nexttrace-enhanced && brew install nexttrace
+brew tap OwO-Network/nexttrace-enhanced && brew install nexttrace-enhanced
 ```
 
 - `Release`里面为很多系统以及不同架构提供了编译好的二进制可执行文件，如果没有可以自行编译。
