@@ -1,10 +1,14 @@
 package wshandle
 
 import (
+	"crypto/tls"
 	"log"
+	"net"
+	"net/http"
 	"net/url"
 	"os"
 	"os/signal"
+	"strings"
 	"sync"
 	"time"
 
@@ -27,6 +31,7 @@ var wsconn *WsConn
 
 // 读取hostp环境变量
 var hostP = GetenvDefault("NEXTTRACE_HOSTPORT", "api.leo.moe")
+var host, port, fast_ip string
 
 func (c *WsConn) keepAlive() {
 	go func() {
@@ -34,7 +39,12 @@ func (c *WsConn) keepAlive() {
 		for {
 			<-time.After(time.Second * 54)
 			if c.Connected {
-				c.Conn.WriteMessage(websocket.TextMessage, []byte("ping"))
+				err := c.Conn.WriteMessage(websocket.TextMessage, []byte("ping"))
+				if err != nil {
+					log.Println(err)
+					c.Connected = false
+					return
+				}
 			}
 		}
 	}()
@@ -107,10 +117,16 @@ func (c *WsConn) messageSendHandler() {
 }
 
 func (c *WsConn) recreateWsConn() {
-	u := url.URL{Scheme: "wss", Host: hostP, Path: "/v2/ipGeoWs"}
+	u := url.URL{Scheme: "wss", Host: fast_ip + ":" + port, Path: "/v2/ipGeoWs"}
 	// log.Printf("connecting to %s", u.String())
-
-	ws, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
+	requestHeader := http.Header{
+		"Host": []string{host},
+	}
+	dialer := websocket.DefaultDialer
+	dialer.TLSClientConfig = &tls.Config{
+		ServerName: host,
+	}
+	ws, _, err := websocket.DefaultDialer.Dial(u.String(), requestHeader)
 	c.Conn = ws
 	if err != nil {
 		log.Println("dial:", err)
@@ -131,11 +147,47 @@ func createWsConn() *WsConn {
 	// 设置终端中断通道
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
+	// 解析域名
+	hostArr := strings.Split(hostP, ":")
+	// 判断是否有指定端口
+	if len(hostArr) > 1 {
+		// 判断是否为 IPv6
+		if strings.HasPrefix(hostP, "[") {
+			tmp := strings.Split(hostP, "]")
+			host = tmp[0]
+			host = host[1:]
+			if port = tmp[1]; port != "" {
+				port = port[1:]
+			}
+		} else {
+			host, port = hostArr[0], hostArr[1]
+		}
+	} else {
+		host = hostP
+	}
+	if port == "" {
+		// 默认端口
+		port = "443"
+	}
+	// 默认配置完成，开始寻找最优 IP
+	fast_ip = GetFastIP(host, port)
 
-	u := url.URL{Scheme: "wss", Host: hostP, Path: "/v2/ipGeoWs"}
+	// 如果 host 是一个 IP 使用默认域名
+	if valid := net.ParseIP(host); valid != nil {
+		host = "api.leo.moe"
+	}
+	// 判断是否是一个 IP
+	requestHeader := http.Header{
+		"Host": []string{host},
+	}
+	dialer := websocket.DefaultDialer
+	dialer.TLSClientConfig = &tls.Config{
+		ServerName: host,
+	}
+	u := url.URL{Scheme: "wss", Host: fast_ip + ":" + port, Path: "/v2/ipGeoWs"}
 	// log.Printf("connecting to %s", u.String())
 
-	c, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
+	c, _, err := websocket.DefaultDialer.Dial(u.String(), requestHeader)
 
 	wsconn = &WsConn{
 		Conn:         c,
