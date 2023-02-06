@@ -7,6 +7,7 @@ require (
 	github.com/google/gopacket v1.1.19
 	github.com/gorilla/websocket v1.5.0
 	github.com/manifoldco/promptui v0.9.0
+	github.com/syndtr/gocapability v0.0.0-20200815063812-42c35b437635
 	golang.org/x/net v0.0.0-20220425223048-2871e0cb64e4
 	golang.org/x/sync v0.0.0-20220513210516-0976fa681c29
 )
@@ -36,14 +37,10 @@ require (
 )
 
 require (
-	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/fatih/color v1.13.0
-	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rodaine/table v1.0.1
-	github.com/stretchr/testify v1.7.1
 	github.com/tidwall/gjson v1.14.1
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.0 // indirect
 	golang.org/x/sys v0.0.0-20220804214406-8e32c043e418 // indirect
-	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )

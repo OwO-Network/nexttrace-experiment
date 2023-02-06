@@ -7,6 +7,7 @@ import (
 	"net"
 	"os"
 	"os/signal"
+	"runtime"
 	"strings"
 	"time"
 
@@ -20,6 +21,7 @@ import (
 	"github.com/OwO-Network/nexttrace-enhanced/util"
 	"github.com/OwO-Network/nexttrace-enhanced/web"
 	"github.com/OwO-Network/nexttrace-enhanced/wshandle"
+	"github.com/syndtr/gocapability/capability"
 )
 
 var fSet = flag.NewFlagSet("", flag.ExitOnError)
@@ -118,9 +120,7 @@ func main() {
 
 	domain := flagApply()
 
-	if os.Getuid() != 0 {
-		log.Fatalln("Traceroute requires root/sudo privileges.")
-	}
+	capabilities_check()
 
 	configData, err := config.Read()
 
@@ -282,4 +282,58 @@ func main() {
 		<-time.After(10 * time.Millisecond)
 	}
 
+}
+
+func capabilities_check() {
+
+	// Windows 判断放在前面，防止遇到一些奇奇怪怪的问题
+	if runtime.GOOS == "windows" {
+		// Running on Windows, skip checking capabilities
+		return
+	}
+
+	uid := os.Getuid()
+	if uid == 0 {
+		// Running as root, skip checking capabilities
+		return
+	}
+
+	/***
+	* 检查当前进程是否有两个关键的权限
+	==== 看不到我 ====
+	* 没办法啦
+	* 自己之前承诺的坑补全篇
+	* 被迫填坑系列 qwq
+	==== 看不到我 ====
+	***/
+
+	// NewPid 已经被废弃了，这里改用 NewPid2 方法
+	caps, err := capability.NewPid2(0)
+	if err != nil {
+		// 判断是否为macOS
+		if runtime.GOOS == "darwin" {
+			// macOS下报错有问题
+		} else {
+			fmt.Println(err)
+		}
+		return
+	}
+
+	// load 获取全部的 caps 信息
+	err = caps.Load()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	// 判断一下权限有木有
+	if caps.Get(capability.EFFECTIVE, capability.CAP_NET_RAW) && caps.Get(capability.EFFECTIVE, capability.CAP_NET_ADMIN) {
+		// 有权限啦
+		return
+	} else {
+		// 没权限啦
+		fmt.Println("您正在以普通用户权限运行 NextTrace，但 NextTrace 未被赋予监听网络套接字的ICMP消息包、修改IP头信息（TTL）等路由跟踪所需的权限")
+		fmt.Println("请使用管理员用户执行 `sudo setcap cap_net_raw,cap_net_admin+eip ${your_nexttrace_path}/nexttrace` 命令，赋予相关权限后再运行~")
+		fmt.Println("什么？为什么 ping 普通用户执行不要 root 权限？因为这些工具在管理员安装时就已经被赋予了一些必要的权限，具体请使用 `getcap /usr/bin/ping` 查看")
+	}
 }
