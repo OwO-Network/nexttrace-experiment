@@ -163,7 +163,7 @@ Usage of nexttrace:
   -6    Only Displays IPv6 addresses
   -D string
         Use the following Network Devices as the source address in outgoing packets
-  -M    Print Trace Map
+  -M    Disable Print Trace Map
   -S string
         Use the following IP address as the source address in outgoing packets
   -T    Use TCP SYN for tracerouting (default port is 80)
