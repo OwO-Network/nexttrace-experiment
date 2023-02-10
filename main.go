@@ -113,6 +113,17 @@ func flagApply() string {
 	if target == "" {
 		printArgHelp()
 	}
+	
+	if strings.Contains(target, "/") {
+		target = strings.Split(target, "/")[2]
+	}
+	
+	if strings.Contains(target, "]") {
+		target = strings.Split(strings.Split(target, "]")[0], "[")[1]
+	} else if strings.Contains(target, ":") {
+		target = strings.Split(target, ":")[0]
+	}
+	
 	return target
 }
 
