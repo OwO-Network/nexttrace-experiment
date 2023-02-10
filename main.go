@@ -121,7 +121,9 @@ func flagApply() string {
 	if strings.Contains(target, "]") {
 		target = strings.Split(strings.Split(target, "]")[0], "[")[1]
 	} else if strings.Contains(target, ":") {
-		target = strings.Split(target, ":")[0]
+		if strings.Count(target, ":") == 1 {
+			target = strings.Split(target, ":")[0]
+		}
 	}
 	
 	return target
