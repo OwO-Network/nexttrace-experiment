@@ -37,6 +37,8 @@ brew tap OwO-Network/nexttrace-enhanced && brew install nexttrace-enhanced
 ```bash
 # IPv4 ICMP Trace
 nexttrace 1.0.0.1
+# URL
+nexttrace http://example.com:8080/index.html?q=1
 
 # 报告打印（生成报告表单，并非实时，一次性输出）
 nexttrace -table 1.0.0.1
@@ -73,14 +75,14 @@ nexttrace -f
 nexttrace -f -T
 ```
 
-`NextTrace` 也可以使用`TCP`和`UDP`协议发起`Traceroute`请求，不过目前只支持`IPv4`
+`NextTrace` 也可以使用`TCP`和`UDP`协议发起`Traceroute`请求，不过`UDP`协议目前只支持`IPv4`
 
 ```bash
 # TCP SYN Trace
 nexttrace -T www.bing.com
 
 # 可以自行指定端口[此处为443]，默认80端口
-nexttrace -T -p 443 1.0.0.1
+nexttrace -T -p 443 2001:4860:4860::8888
 
 # UDP Trace
 nexttrace -U 1.0.0.1
