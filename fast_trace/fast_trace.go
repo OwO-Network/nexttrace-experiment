@@ -144,6 +144,16 @@ func (f *FastTracer) testEDU() {
 func FastTest(tm bool, srcDev string, srcAddr string) {
 	var c string
 
+	outEnable := false
+	fmt.Println("Hi，欢迎使用 Fast Trace 功能，请注意 Fast Trace 功能只适合新手使用\n因为国内网络复杂，我们设置的测试目标有限，建议普通用户自测以获得更加精准的路由情况")
+	fmt.Println("请您选择要测试的 IP 类型\n1. IPv4\n2. IPv6")
+	fmt.Print("请选择选项：")
+	fmt.Scanln(&c)
+	if c == "2" {
+		FastTestv6(tm, outEnable)
+		return
+	}
+
 	specificDev = srcDev
 	specificAddr = srcAddr
 
