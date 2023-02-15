@@ -113,11 +113,11 @@ func flagApply() string {
 	if target == "" {
 		printArgHelp()
 	}
-	
+
 	if strings.Contains(target, "/") {
 		target = strings.Split(target, "/")[2]
 	}
-	
+
 	if strings.Contains(target, "]") {
 		target = strings.Split(strings.Split(target, "]")[0], "[")[1]
 	} else if strings.Contains(target, ":") {
@@ -125,7 +125,7 @@ func flagApply() string {
 			target = strings.Split(target, ":")[0]
 		}
 	}
-	
+
 	return target
 }
 
@@ -155,10 +155,15 @@ func main() {
 
 	var ip net.IP
 
-	if *tcpSYNFlag || *udpPackageFlag {
-		ip = util.DomainLookUp(domain, *dns_ip, true, false, *jsonEnable)
+	//if *tcpSYNFlag || *udpPackageFlag {
+	//	ip = util.DomainLookUp(domain, *dns_ip, true, false, *jsonEnable)
+	//} else {
+	//	ip = util.DomainLookUp(domain, *dns_ip, *ipv4Only, *ipv6Only, *jsonEnable)
+	//}
+	if *udpPackageFlag {
+		ip = util.DomainLookUp(domain, true)
 	} else {
-		ip = util.DomainLookUp(domain, *dns_ip, *ipv4Only, *ipv6Only, *jsonEnable)
+		ip = util.DomainLookUp(domain, false)
 	}
 
 	// if ip.To4() == nil && strings.ToUpper(*dataOrigin) == "LEOMOEAPI" {

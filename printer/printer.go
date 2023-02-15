@@ -11,6 +11,15 @@ import (
 
 var dataOrigin string
 
+const (
+	RED_PREFIX    = "\033[1;31m"
+	GREEN_PREFIX  = "\033[1;32m"
+	YELLOW_PREFIX = "\033[1;33m"
+	BLUE_PREFIX   = "\033[1;34m"
+	CYAN_PREFIX   = "\033[1;36m"
+	RESET_PREFIX  = "\033[0m"
+)
+
 func TraceroutePrinter(res *trace.Result) {
 	for i, hop := range res.Hops {
 		fmt.Print(i + 1)
