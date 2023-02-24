@@ -4,13 +4,13 @@
 
 </div>
 
-# NextTrace Enhanced
+# NextTrace Experiment
 
 一款开源的可视化路由跟踪工具，使用 Golang 开发。
 
-NextTrace 一共有2个版本，专注于轻量的 [Lite 版本](https://github.com/xgadget-lab/nexttrace)以及更面向发烧友的 Enhanced 版本。
+NextTrace Experiment 是一个用于实验的版本，对于普通用户建议使用 [正式分支](https://github.com/sjlleo/nexttrace)。
 
-PS：Enhanced版本旨在提供高度可定制化的可视化 Traceroute 工具，如果需要轻量化，请使用Lite版本
+PS：Experiment 版本旨在提供高度可定制化的可视化 Traceroute 工具，但是也是实验版本，我们可能并不会经常性更新，如果您期望获得最新特性，您应该使用正式版本。
 
 ## How To Use
 
